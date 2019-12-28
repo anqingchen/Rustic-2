@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "axis=y":  { "model": "rustic2:block/rope" },
+    "axis=z":   { "model": "rustic2:block/rope", "x": 90 },
+    "axis=x":   { "model": "rustic2:block/rope", "x": 90, "y": 90 }
+  }
+}

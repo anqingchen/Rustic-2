@@ -1,0 +1,8 @@
+{
+  "parent": "block/slab",
+  "textures": {
+    "bottom": "rustic2:block/slate_roof",
+    "top": "rustic2:block/slate_roof",
+    "side": "rustic2:block/slate_roof"
+  }
+}
