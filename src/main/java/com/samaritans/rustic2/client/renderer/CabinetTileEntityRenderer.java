@@ -12,15 +12,15 @@ import net.minecraft.block.ChestBlock;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.IChestLid;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.animation.TileEntityRendererFast;
 
 // todo: possibly allow mirror, or render items inside cabinet?
-public class CabinetTileEntityRenderer<T extends TileEntity & IChestLid> extends TileEntityRenderer<T> {
+public class CabinetTileEntityRenderer<T extends TileEntity & IChestLid> extends TileEntityRendererFast<T> {
     protected static final ResourceLocation TEXTURE_NORMAL = new ResourceLocation("rustic2:textures/model/cabinet.png");
     protected static final ResourceLocation TEXTURE_DOUBLE = new ResourceLocation("rustic2:textures/model/cabinet_double.png");
     protected final CabinetModel simpleCabinet = new CabinetModel(false);

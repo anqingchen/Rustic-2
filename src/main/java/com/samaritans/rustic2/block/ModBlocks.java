@@ -62,6 +62,8 @@ public class ModBlocks {
 
     public static final Block pot = null;
 
+    public static final Block crushing_tub = null;
+
     @SubscribeEvent
     public static void onRegisterBlocks(RegistryEvent.Register<Block> event) {
         final Block.Properties ROCK_PROPERTIES = Block.Properties.create(Material.ROCK).hardnessAndResistance(1.5F, 6.0F).sound(SoundType.STONE);
@@ -110,7 +112,9 @@ public class ModBlocks {
                 Util.setup(new CabinetBlock(PLANKS_PROPERTIES), "spruce_cabinet"),
                 // todo: more pot variants
                 // Pots
-                Util.setup(new PotBlock(ROCK_PROPERTIES), "pot")
+                Util.setup(new PotBlock(ROCK_PROPERTIES), "pot"),
+
+                Util.setup(new CrushingTubBlock(PLANKS_PROPERTIES), "crushing_tub")
         );
     }
 

@@ -14,12 +14,14 @@ import net.minecraftforge.registries.ObjectHolder;
 public class ModTileEntityType {
     public static final TileEntityType<CabinetTileEntity> CABINET = null;
     public static final TileEntityType<PotTileEntity> POT = null;
+    public static final TileEntityType<CrushingTubTileEntity> CRUSHING_TUB = null;
 
     @SubscribeEvent
     public static void onRegisterBlockItems(RegistryEvent.Register<TileEntityType<?>> event) {
         event.getRegistry().registerAll(
                 Util.setup(TileEntityType.Builder.create(CabinetTileEntity::new, ModBlocks.acacia_cabinet, ModBlocks.birch_cabinet, ModBlocks.dark_oak_cabinet, ModBlocks.jungle_cabinet, ModBlocks.oak_cabinet, ModBlocks.spruce_cabinet).build(null), "cabinet"),
-                Util.setup(TileEntityType.Builder.create(PotTileEntity::new, ModBlocks.pot).build(null), "pot")
+                Util.setup(TileEntityType.Builder.create(PotTileEntity::new, ModBlocks.pot).build(null), "pot"),
+                Util.setup(TileEntityType.Builder.create(CrushingTubTileEntity::new, ModBlocks.crushing_tub).build(null), "crushing_tub")
         );
     }
 }

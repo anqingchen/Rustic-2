@@ -23,7 +23,9 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import net.minecraftforge.items.wrapper.InvWrapper;
@@ -172,8 +174,8 @@ public class CabinetTileEntity extends LockableLootTileEntity implements ITickab
     }
 
     @Override
-    public <T> LazyOptional<T> getCapability(net.minecraftforge.common.capabilities.Capability<T> cap, Direction side) {
-        if (!this.removed && cap == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+    public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+        if (!this.removed && cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             if (this.cabinetHandler == null) {
                 this.cabinetHandler = LazyOptional.of(this::createHandler);
             }

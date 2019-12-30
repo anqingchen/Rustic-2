@@ -2,8 +2,10 @@ package com.samaritans.rustic2;
 
 import com.samaritans.rustic2.block.ModBlocks;
 import com.samaritans.rustic2.client.renderer.CabinetTileEntityRenderer;
+import com.samaritans.rustic2.client.renderer.CrushingTubTileEntityRenderer;
 import com.samaritans.rustic2.network.PacketHandler;
 import com.samaritans.rustic2.tileentity.CabinetTileEntity;
+import com.samaritans.rustic2.tileentity.CrushingTubTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemGroup;
@@ -57,15 +59,13 @@ public class Rustic2
     private void setup(final FMLCommonSetupEvent event)
     {
         // some preinit code
-        LOGGER.info("HELLO FROM PREINIT");
-        LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
         PacketHandler.registerMessages();
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
         // do something that can only be done on the client
-        LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().gameSettings);
         ClientRegistry.bindTileEntitySpecialRenderer(CabinetTileEntity.class, new CabinetTileEntityRenderer<>());
+        ClientRegistry.bindTileEntitySpecialRenderer(CrushingTubTileEntity.class, new CrushingTubTileEntityRenderer());
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event)
@@ -77,25 +77,14 @@ public class Rustic2
     private void processIMC(final InterModProcessEvent event)
     {
         // some example code to receive and process InterModComms from other mods
-        LOGGER.info("Got IMC {}", event.getIMCStream().
-                map(m->m.getMessageSupplier().get()).
-                collect(Collectors.toList()));
+//        LOGGER.info("Got IMC {}", event.getIMCStream().
+//                map(m->m.getMessageSupplier().get()).
+//                collect(Collectors.toList()));
     }
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
     public void onServerStarting(FMLServerStartingEvent event) {
         // do something when the server starts
-        LOGGER.info("HELLO from server starting");
-    }
-
-    // You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD
-    // Event bus for receiving Registry Events)
-    @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
-    public static class RegistryEvents {
-        @SubscribeEvent
-        public static void onBlocksRegistry(final RegistryEvent.Register<Block> blockRegistryEvent) {
-            // register a new block here
-            LOGGER.info("HELLO from Register Block");
-        }
+//        LOGGER.info("HELLO from server starting");
     }
 }
