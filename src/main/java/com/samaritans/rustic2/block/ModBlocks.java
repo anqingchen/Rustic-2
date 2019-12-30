@@ -124,9 +124,9 @@ public class ModBlocks {
         final Item.Properties properties = new Item.Properties().group(Rustic2.TAB);
         ForgeRegistries.BLOCKS.getValues().stream().filter(block -> block.getRegistryName().getNamespace().equals(Rustic2.MODID))
                 .filter(block -> !(block instanceof CandleBlock) && !(block instanceof CabinetBlock)).forEach(block -> {
-                    final BlockItem blockItem = new BlockItem(block, properties);
-                    registry.register(Util.setup(blockItem, block.getRegistryName()));
-                });
+            final BlockItem blockItem = new BlockItem(block, properties);
+            registry.register(Util.setup(blockItem, block.getRegistryName()));
+        });
 
         // Register WallOrFloorItem
         registry.register(Util.setup(new WallOrFloorItem(candle, wall_candle, properties), "candle"));

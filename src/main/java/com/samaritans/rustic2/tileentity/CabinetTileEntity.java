@@ -32,15 +32,35 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 
 @OnlyIn(value = Dist.CLIENT, _interface = IChestLid.class)
 public class CabinetTileEntity extends LockableLootTileEntity implements ITickableTileEntity, IChestLid {
-    private NonNullList<ItemStack> cabinetContents = NonNullList.withSize(27, ItemStack.EMPTY);
     protected float lidAngle;
     protected float prevLidAngle;
     protected int numPlayersUsing;
+    private NonNullList<ItemStack> cabinetContents = NonNullList.withSize(27, ItemStack.EMPTY);
     private int ticksSinceSync;
     private LazyOptional<IItemHandlerModifiable> cabinetHandler;
 
     public CabinetTileEntity() {
         super(ModTileEntityType.CABINET);
+    }
+
+    public static int calculatePlayersUsingSync(World world, LockableTileEntity tileEntity, int ticksSinceSync, int x, int y, int z, int numPlayerUsing) {
+        if (!world.isRemote && numPlayerUsing != 0 && ticksSinceSync % 200 == 0) {
+            numPlayerUsing = calculatePlayersUsing(world, tileEntity, x, y, z);
+        }
+        return numPlayerUsing;
+    }
+
+    public static int calculatePlayersUsing(World world, LockableTileEntity tileEntity, int x, int y, int z) {
+        int i = 0;
+        for (PlayerEntity playerentity : world.getEntitiesWithinAABB(PlayerEntity.class, new AxisAlignedBB(((float) x - 5.0F), ((float) y - 5.0F), ((float) z - 5.0F), ((float) (x + 1) + 5.0F), ((float) (y + 1) + 5.0F), ((float) (z + 1) + 5.0F)))) {
+            if (playerentity.openContainer instanceof ChestContainer) {
+                IInventory iinventory = ((ChestContainer) playerentity.openContainer).getLowerChestInventory();
+                if (iinventory == tileEntity || iinventory instanceof DoubleSidedInventory && ((DoubleSidedInventory) iinventory).isPartOfLargeChest(tileEntity)) {
+                    ++i;
+                }
+            }
+        }
+        return i;
     }
 
     @Override
@@ -119,26 +139,6 @@ public class CabinetTileEntity extends LockableLootTileEntity implements ITickab
         }
     }
 
-    public static int calculatePlayersUsingSync(World world, LockableTileEntity tileEntity, int ticksSinceSync, int x, int y, int z, int numPlayerUsing) {
-        if (!world.isRemote && numPlayerUsing != 0 && ticksSinceSync % 200 == 0) {
-            numPlayerUsing = calculatePlayersUsing(world, tileEntity, x, y, z);
-        }
-        return numPlayerUsing;
-    }
-
-    public static int calculatePlayersUsing(World world, LockableTileEntity tileEntity, int x, int y, int z) {
-        int i = 0;
-        for(PlayerEntity playerentity : world.getEntitiesWithinAABB(PlayerEntity.class, new AxisAlignedBB(((float)x - 5.0F), ((float)y - 5.0F), ((float)z - 5.0F), ((float)(x + 1) + 5.0F), ((float)(y + 1) + 5.0F), ((float)(z + 1) + 5.0F)))) {
-            if (playerentity.openContainer instanceof ChestContainer) {
-                IInventory iinventory = ((ChestContainer)playerentity.openContainer).getLowerChestInventory();
-                if (iinventory == tileEntity || iinventory instanceof DoubleSidedInventory && ((DoubleSidedInventory)iinventory).isPartOfLargeChest(tileEntity)) {
-                    ++i;
-                }
-            }
-        }
-        return i;
-    }
-
     @Override
     public boolean receiveClientEvent(int id, int type) {
         if (id == 1) {
@@ -152,13 +152,13 @@ public class CabinetTileEntity extends LockableLootTileEntity implements ITickab
     private void playSound(SoundEvent soundIn) {
         CabinetBlock.CabinetType cabinetType = this.getBlockState().get(CabinetBlock.TYPE);
         if (cabinetType != CabinetBlock.CabinetType.BOTTOM) {
-            double d0 = (double)this.pos.getX() + 0.5D;
-            double d1 = (double)this.pos.getY() + 0.5D;
-            double d2 = (double)this.pos.getZ() + 0.5D;
+            double d0 = (double) this.pos.getX() + 0.5D;
+            double d1 = (double) this.pos.getY() + 0.5D;
+            double d2 = (double) this.pos.getZ() + 0.5D;
             if (cabinetType == CabinetBlock.CabinetType.TOP) {
                 Direction direction = CabinetBlock.getDirectionToAttached(this.getBlockState());
-                d0 += (double)direction.getXOffset() * 0.5D;
-                d2 += (double)direction.getZOffset() * 0.5D;
+                d0 += (double) direction.getXOffset() * 0.5D;
+                d2 += (double) direction.getZOffset() * 0.5D;
             }
             this.world.playSound(null, d0, d1, d2, soundIn, SoundCategory.BLOCKS, 0.5F, this.world.rand.nextFloat() * 0.1F + 0.9F);
         }
@@ -235,7 +235,7 @@ public class CabinetTileEntity extends LockableLootTileEntity implements ITickab
 
     @Override
     public boolean isEmpty() {
-        for(ItemStack itemstack : this.cabinetContents) {
+        for (ItemStack itemstack : this.cabinetContents) {
             if (!itemstack.isEmpty()) {
                 return false;
             }

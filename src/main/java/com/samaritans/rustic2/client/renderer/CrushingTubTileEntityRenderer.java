@@ -26,15 +26,15 @@ public class CrushingTubTileEntityRenderer extends TileEntityRenderer<CrushingTu
         IItemHandlerModifiable itemStackHandler = te.getItemHandler();
         if (itemStackHandler.getSlots() > 0 && !itemStackHandler.getStackInSlot(0).isEmpty() && te.getWorld() != null) {
             ItemStack stack = itemStackHandler.getStackInSlot(0);
-            int itemCount = (int)Math.ceil((stack.getCount())/8.0);
+            int itemCount = (int) Math.ceil((stack.getCount()) / 8.0);
             Random rand = new Random(getWorld().getSeed());
-            for (int i = 0; i < itemCount; i ++){
+            for (int i = 0; i < itemCount; i++) {
                 GlStateManager.pushMatrix();
                 RenderHelper.enableStandardItemLighting();
                 GlStateManager.enableLighting();
-                GlStateManager.translated(x, y+0.062+(i*0.0625), z);
+                GlStateManager.translated(x, y + 0.062 + (i * 0.0625), z);
                 GlStateManager.translated(0.5, 0.0, 0.5);
-                GlStateManager.rotated(rand.nextFloat()*360.0, 0, 1.0, 0);
+                GlStateManager.rotated(rand.nextFloat() * 360.0, 0, 1.0, 0);
                 GlStateManager.translated(-0.5, 0, -0.5);
                 GlStateManager.rotated(90, 1, 0, 0);
                 GlStateManager.translated(0.5, -0.1875, 0.0);
@@ -49,7 +49,7 @@ public class CrushingTubTileEntityRenderer extends TileEntityRenderer<CrushingTu
         int amount = tank.getFluidInTank(0).getAmount();
         int capacity = tank.getTankCapacity(0);
         Fluid fluid = tank.getFluidInTank(0).getFluid();
-        if (fluid != Fluids.EMPTY){
+        if (fluid != Fluids.EMPTY) {
             int c = fluid.getAttributes().getColor();
             int blue = c & 0xFF;
             int green = (c >> 8) & 0xFF;
@@ -78,10 +78,10 @@ public class CrushingTubTileEntityRenderer extends TileEntityRenderer<CrushingTu
             Tessellator tess = Tessellator.getInstance();
             BufferBuilder buf = tess.getBuffer();
             buf.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
-            buf.pos(x+0.0625, y+0.0625+0.5*((float)amount/(float)capacity), z+0.0625).tex(minU, minV).lightmap(lightx,lighty).color(red,green,blue,a).endVertex();
-            buf.pos(x+0.9375, y+0.0625+0.5*((float)amount/(float)capacity), z+0.0625).tex(maxU, minV).lightmap(lightx,lighty).color(red,green,blue,a).endVertex();
-            buf.pos(x+0.9375, y+0.0625+0.5*((float)amount/(float)capacity), z+0.9375).tex(maxU, maxV).lightmap(lightx,lighty).color(red,green,blue,a).endVertex();
-            buf.pos(x+0.0625, y+0.0625+0.5*((float)amount/(float)capacity), z+0.9375).tex(minU, maxV).lightmap(lightx,lighty).color(red,green,blue,a).endVertex();
+            buf.pos(x + 0.0625, y + 0.0625 + 0.5 * ((float) amount / (float) capacity), z + 0.0625).tex(minU, minV).lightmap(lightx, lighty).color(red, green, blue, a).endVertex();
+            buf.pos(x + 0.9375, y + 0.0625 + 0.5 * ((float) amount / (float) capacity), z + 0.0625).tex(maxU, minV).lightmap(lightx, lighty).color(red, green, blue, a).endVertex();
+            buf.pos(x + 0.9375, y + 0.0625 + 0.5 * ((float) amount / (float) capacity), z + 0.9375).tex(maxU, maxV).lightmap(lightx, lighty).color(red, green, blue, a).endVertex();
+            buf.pos(x + 0.0625, y + 0.0625 + 0.5 * ((float) amount / (float) capacity), z + 0.9375).tex(minU, maxV).lightmap(lightx, lighty).color(red, green, blue, a).endVertex();
             tess.draw();
 
             GlStateManager.disableAlphaTest();

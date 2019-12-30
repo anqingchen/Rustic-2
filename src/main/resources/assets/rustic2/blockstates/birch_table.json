@@ -1,13 +1,44 @@
 {
   "multipart": [
-    { "apply": {"model": "rustic2:block/birch_table"} },
-    { "when": {"nw": "true"},
-      "apply": {"model": "rustic2:block/birch_table_leg"} },
-    { "when": {"ne": "true"},
-      "apply": {"model": "rustic2:block/birch_table_leg", "y": 90} },
-    { "when": {"se": "true"},
-      "apply": {"model": "rustic2:block/birch_table_leg", "y": 180} },
-    { "when": {"sw": "true"},
-      "apply": {"model": "rustic2:block/birch_table_leg", "y": 270} }
+    {
+      "apply": {
+        "model": "rustic2:block/birch_table"
+      }
+    },
+    {
+      "when": {
+        "nw": "true"
+      },
+      "apply": {
+        "model": "rustic2:block/birch_table_leg"
+      }
+    },
+    {
+      "when": {
+        "ne": "true"
+      },
+      "apply": {
+        "model": "rustic2:block/birch_table_leg",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "se": "true"
+      },
+      "apply": {
+        "model": "rustic2:block/birch_table_leg",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "sw": "true"
+      },
+      "apply": {
+        "model": "rustic2:block/birch_table_leg",
+        "y": 270
+      }
+    }
   ]
 }

@@ -1,5 +1,7 @@
 {
   "variants": {
-    "": { "model": "rustic2:block/slate_bricks" }
+    "": {
+      "model": "rustic2:block/slate_bricks"
+    }
   }
 }

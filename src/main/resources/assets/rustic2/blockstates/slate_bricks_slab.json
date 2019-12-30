@@ -1,7 +1,13 @@
 {
   "variants": {
-    "type=bottom": { "model": "rustic2:block/slate_bricks_slab" },
-    "type=top": { "model": "rustic2:block/slate_bricks_slab_top" },
-    "type=double": { "model": "rustic2:block/slate_bricks" }
+    "type=bottom": {
+      "model": "rustic2:block/slate_bricks_slab"
+    },
+    "type=top": {
+      "model": "rustic2:block/slate_bricks_slab_top"
+    },
+    "type=double": {
+      "model": "rustic2:block/slate_bricks"
+    }
   }
 }

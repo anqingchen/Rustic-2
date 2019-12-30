@@ -40,12 +40,11 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 
 public class CabinetBlock extends ContainerBlock {
+    public static final EnumProperty<CabinetType> TYPE = EnumProperty.create("type", CabinetType.class);
+    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     private static final VoxelShape SHAPE_SINGLE = VoxelShapes.fullCube();
     private static final VoxelShape SHAPE_BOTTOM = VoxelShapes.create(0, 0, 0, 1, 2, 1);
     private static final VoxelShape SHAPE_TOP = VoxelShapes.create(0, 1, 0, 1, -1, 1);
-
-    public static final EnumProperty<CabinetType> TYPE = EnumProperty.create("type", CabinetType.class);
-    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     private static final InventoryFactory<IInventory> inventoryFactory = new InventoryFactory<IInventory>() {
         public IInventory forDouble(CabinetTileEntity cabinetA, CabinetTileEntity cabinetB) {
             return new DoubleSidedInventory(cabinetA, cabinetB);
@@ -79,6 +78,7 @@ public class CabinetBlock extends ContainerBlock {
                 }
             };
         }
+
         public INamedContainerProvider forSingle(CabinetTileEntity cabinetTileEntity) {
             return cabinetTileEntity;
         }
@@ -86,6 +86,54 @@ public class CabinetBlock extends ContainerBlock {
 
     public CabinetBlock(Properties properties) {
         super(properties);
+    }
+
+    @Nullable
+    public static <T> T getCabinetInventory(BlockState blockStateIn, IWorld world, BlockPos blockPos, InventoryFactory<T> factory) {
+        TileEntity tileentity = world.getTileEntity(blockPos);
+        if (!(tileentity instanceof CabinetTileEntity)) {
+            return null;
+        } else if (isBlocked(world, blockPos)) {
+            return null;
+        } else {
+            CabinetTileEntity cabinetTileEntity = (CabinetTileEntity) tileentity;
+            CabinetType cabinetType = blockStateIn.get(TYPE);
+            if (cabinetType == CabinetType.SINGLE) {
+                return factory.forSingle(cabinetTileEntity);
+            } else {
+                BlockPos blockpos = blockPos.offset(getDirectionToAttached(blockStateIn));
+                BlockState blockstate = world.getBlockState(blockpos);
+                if (blockstate.getBlock() == blockStateIn.getBlock()) {
+                    CabinetType cabinetType1 = blockstate.get(TYPE);
+                    if (cabinetType1 != CabinetType.SINGLE && cabinetType != cabinetType1 && blockstate.get(FACING) == blockStateIn.get(FACING)) {
+                        if (isBlocked(world, blockpos)) {
+                            return null;
+                        }
+                        TileEntity tileentity1 = world.getTileEntity(blockpos);
+                        if (tileentity1 instanceof CabinetTileEntity) {
+                            CabinetTileEntity cabinetTileEntity1 = cabinetType == CabinetType.BOTTOM ? cabinetTileEntity : (CabinetTileEntity) tileentity1;
+                            CabinetTileEntity cabinetTileEntity2 = cabinetType == CabinetType.BOTTOM ? (CabinetTileEntity) tileentity1 : cabinetTileEntity;
+                            return factory.forDouble(cabinetTileEntity1, cabinetTileEntity2);
+                        }
+                    }
+                }
+                return factory.forSingle(cabinetTileEntity);
+            }
+        }
+    }
+
+    private static boolean isBlocked(IWorld world, BlockPos blockPos) {
+        Direction direction = world.getBlockState(blockPos).get(FACING);
+        return world.getBlockState(blockPos.offset(direction)).isNormalCube(world, blockPos.offset(direction));
+    }
+
+    public static Direction getDirectionToAttached(BlockState state) {
+        return state.get(TYPE) == CabinetType.TOP ? Direction.DOWN : Direction.UP;
+    }
+
+    @Nullable
+    public static IInventory getInventory(BlockState state, World world, BlockPos pos) {
+        return getCabinetInventory(state, world, pos, inventoryFactory);
     }
 
     @Override
@@ -101,9 +149,12 @@ public class CabinetBlock extends ContainerBlock {
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         switch (state.get(TYPE)) {
-            case TOP: return SHAPE_TOP;
-            case BOTTOM: return SHAPE_BOTTOM;
-            default: return SHAPE_SINGLE;
+            case TOP:
+                return SHAPE_TOP;
+            case BOTTOM:
+                return SHAPE_BOTTOM;
+            default:
+                return SHAPE_SINGLE;
         }
     }
 
@@ -129,7 +180,7 @@ public class CabinetBlock extends ContainerBlock {
         if (state.getBlock() != newState.getBlock()) {
             TileEntity tileentity = worldIn.getTileEntity(pos);
             if (tileentity instanceof IInventory) {
-                InventoryHelper.dropInventoryItems(worldIn, pos, (IInventory)tileentity);
+                InventoryHelper.dropInventoryItems(worldIn, pos, (IInventory) tileentity);
                 worldIn.updateComparatorOutputLevel(pos, this);
             }
             super.onReplaced(state, worldIn, pos, newState, isMoving);
@@ -156,7 +207,7 @@ public class CabinetBlock extends ContainerBlock {
         if (stack.hasDisplayName()) {
             TileEntity tileentity = worldIn.getTileEntity(pos);
             if (tileentity instanceof CabinetTileEntity) {
-                ((CabinetTileEntity)tileentity).setCustomName(stack.getDisplayName());
+                ((CabinetTileEntity) tileentity).setCustomName(stack.getDisplayName());
             }
         }
     }
@@ -169,8 +220,7 @@ public class CabinetBlock extends ContainerBlock {
                 if (stateIn.get(TYPE) == CabinetType.SINGLE && cabinetType != CabinetType.SINGLE && stateIn.get(FACING) == facingState.get(FACING)) {
                     return stateIn.with(TYPE, cabinetType.opposite());
                 }
-            }
-            else if (getDirectionToAttached(stateIn) == facing){
+            } else if (getDirectionToAttached(stateIn) == facing) {
                 return stateIn.with(TYPE, CabinetType.SINGLE);
             }
         }
@@ -186,54 +236,6 @@ public class CabinetBlock extends ContainerBlock {
     @Nullable
     public INamedContainerProvider getContainer(BlockState state, World worldIn, BlockPos pos) {
         return getCabinetInventory(state, worldIn, pos, namedFactory);
-    }
-
-    @Nullable
-    public static <T> T getCabinetInventory(BlockState blockStateIn, IWorld world, BlockPos blockPos, InventoryFactory<T> factory) {
-        TileEntity tileentity = world.getTileEntity(blockPos);
-        if (!(tileentity instanceof CabinetTileEntity)) {
-            return null;
-        } else if (isBlocked(world, blockPos)) {
-            return null;
-        } else {
-            CabinetTileEntity cabinetTileEntity = (CabinetTileEntity)tileentity;
-            CabinetType cabinetType = blockStateIn.get(TYPE);
-            if (cabinetType == CabinetType.SINGLE) {
-                return factory.forSingle(cabinetTileEntity);
-            } else {
-                BlockPos blockpos = blockPos.offset(getDirectionToAttached(blockStateIn));
-                BlockState blockstate = world.getBlockState(blockpos);
-                if (blockstate.getBlock() == blockStateIn.getBlock()) {
-                    CabinetType cabinetType1 = blockstate.get(TYPE);
-                    if (cabinetType1 != CabinetType.SINGLE && cabinetType != cabinetType1 && blockstate.get(FACING) == blockStateIn.get(FACING)) {
-                        if (isBlocked(world, blockpos)) {
-                            return null;
-                        }
-                        TileEntity tileentity1 = world.getTileEntity(blockpos);
-                        if (tileentity1 instanceof CabinetTileEntity) {
-                            CabinetTileEntity cabinetTileEntity1 = cabinetType == CabinetType.BOTTOM ? cabinetTileEntity : (CabinetTileEntity)tileentity1;
-                            CabinetTileEntity cabinetTileEntity2 = cabinetType == CabinetType.BOTTOM ? (CabinetTileEntity)tileentity1 : cabinetTileEntity;
-                            return factory.forDouble(cabinetTileEntity1, cabinetTileEntity2);
-                        }
-                    }
-                }
-                return factory.forSingle(cabinetTileEntity);
-            }
-        }
-    }
-
-    private static boolean isBlocked(IWorld world, BlockPos blockPos) {
-        Direction direction = world.getBlockState(blockPos).get(FACING);
-        return world.getBlockState(blockPos.offset(direction)).isNormalCube(world, blockPos.offset(direction));
-    }
-
-    public static Direction getDirectionToAttached(BlockState state) {
-        return state.get(TYPE) == CabinetType.TOP ? Direction.DOWN : Direction.UP;
-    }
-
-    @Nullable
-    public static IInventory getInventory(BlockState state, World world, BlockPos pos) {
-        return getCabinetInventory(state, world, pos, inventoryFactory);
     }
 
     @Override

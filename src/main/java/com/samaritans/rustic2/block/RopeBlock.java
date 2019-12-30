@@ -23,11 +23,10 @@ import javax.annotation.Nullable;
 
 // fak dis i give up
 public class RopeBlock extends Block {
-    private static final VoxelShape SHAPE = VoxelShapes.create(0.4375F, 0.0F, 0.4375F, 0.5625F, 1.0F, 0.5625F);
-
     public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.AXIS;
     public static final IntegerProperty DISTANCE = BlockStateProperties.DISTANCE_0_7;
     public static final BooleanProperty KNOT = BlockStateProperties.ATTACHED;
+    private static final VoxelShape SHAPE = VoxelShapes.create(0.4375F, 0.0F, 0.4375F, 0.5625F, 1.0F, 0.5625F);
 
     public RopeBlock(Properties properties) {
         super(properties);
@@ -47,12 +46,12 @@ public class RopeBlock extends Block {
         if (axis == Direction.Axis.X)
             return worldIn.getBlockState(pos.east()).getBlock() instanceof StakeBlock ||
                     worldIn.getBlockState(pos.west()).getBlock() instanceof StakeBlock ||
-                    (worldIn.getBlockState(pos.east()).getBlock() == this && worldIn.getBlockState(pos.east()).get(AXIS) == axis && worldIn.getBlockState(pos.east()).get(DISTANCE) < distance)||
+                    (worldIn.getBlockState(pos.east()).getBlock() == this && worldIn.getBlockState(pos.east()).get(AXIS) == axis && worldIn.getBlockState(pos.east()).get(DISTANCE) < distance) ||
                     (worldIn.getBlockState(pos.west()).getBlock() == this && worldIn.getBlockState(pos.west()).get(AXIS) == axis && worldIn.getBlockState(pos.west()).get(DISTANCE) < distance);
         if (axis == Direction.Axis.Z)
             return worldIn.getBlockState(pos.north()).getBlock() instanceof StakeBlock ||
                     worldIn.getBlockState(pos.south()).getBlock() instanceof StakeBlock ||
-                    (worldIn.getBlockState(pos.north()).getBlock() == this && worldIn.getBlockState(pos.north()).get(AXIS) == axis && worldIn.getBlockState(pos.north()).get(DISTANCE) < distance)||
+                    (worldIn.getBlockState(pos.north()).getBlock() == this && worldIn.getBlockState(pos.north()).get(AXIS) == axis && worldIn.getBlockState(pos.north()).get(DISTANCE) < distance) ||
                     (worldIn.getBlockState(pos.south()).getBlock() == this && worldIn.getBlockState(pos.south()).get(AXIS) == axis && worldIn.getBlockState(pos.south()).get(DISTANCE) < distance);
         return false;
     }
@@ -64,7 +63,7 @@ public class RopeBlock extends Block {
         IWorldReader iworldreader = context.getWorld();
         BlockPos blockpos = context.getPos();
 
-        for(Direction direction : Direction.values()) {
+        for (Direction direction : Direction.values()) {
             if (isValidPosition(blockstate.with(AXIS, direction.getAxis()), iworldreader, blockpos)) {
                 return blockstate.with(AXIS, direction.getAxis()).with(DISTANCE, getDistance(iworldreader, blockpos));
             }
@@ -82,7 +81,7 @@ public class RopeBlock extends Block {
             return 0;
         }
 
-        for(Direction direction : Direction.Plane.HORIZONTAL) {
+        for (Direction direction : Direction.Plane.HORIZONTAL) {
             BlockState blockstate1 = iblockReader.getBlockState(blockpos$mutableblockpos.setPos(blockPos).move(direction));
             if (blockstate1.getBlock() == this) {
                 i = Math.min(i, blockstate1.get(DISTANCE) + 1);

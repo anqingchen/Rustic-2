@@ -1,5 +1,7 @@
 {
   "variants": {
-    "": { "model": "rustic2:block/jungle_cabinet" }
+    "": {
+      "model": "rustic2:block/jungle_cabinet"
+    }
   }
 }

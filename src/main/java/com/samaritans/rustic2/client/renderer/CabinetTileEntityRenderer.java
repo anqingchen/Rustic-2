@@ -24,9 +24,26 @@ public class CabinetTileEntityRenderer<T extends TileEntity & IChestLid> extends
     protected static final ResourceLocation TEXTURE_NORMAL = new ResourceLocation("rustic2:textures/model/cabinet.png");
     protected static final ResourceLocation TEXTURE_DOUBLE = new ResourceLocation("rustic2:textures/model/cabinet_double.png");
     protected final CabinetModel simpleCabinet = new CabinetModel(false);
-//    protected final CabinetModel simpleCabinetM = new CabinetModel(true);
+    //    protected final CabinetModel simpleCabinetM = new CabinetModel(true);
     protected final TallCabinetModel tallCabinet = new TallCabinetModel(false);
 //    protected final TallCabinetModel doubleCabinetM = new TallCabinetModel(true);
+
+    @SuppressWarnings("ConstantConditions")
+    public static int getColor(Block block) {
+        if (block == ModBlocks.acacia_cabinet) {
+            return 12215095;
+        } else if (block == ModBlocks.birch_cabinet) {
+            return 14139781;
+        } else if (block == ModBlocks.dark_oak_cabinet) {
+            return 5190168;
+        } else if (block == ModBlocks.jungle_cabinet) {
+            return 12093284;
+        } else if (block == ModBlocks.oak_cabinet) {
+            return 12096607;
+        } else {
+            return 8544570;
+        }
+    }
 
     @Override
     public void renderTileEntityFast(T tileEntityIn, double x, double y, double z, float partialTicks, int destroyStage, BufferBuilder buffer) {
@@ -64,7 +81,7 @@ public class CabinetTileEntityRenderer<T extends TileEntity & IChestLid> extends
             GlStateManager.scalef(1.0F, -1.0F, -1.0F);
 
             float j = blockstate.get(ChestBlock.FACING).getHorizontalAngle();
-            if ((double)Math.abs(j) > 1.0E-5D) {
+            if ((double) Math.abs(j) > 1.0E-5D) {
                 GlStateManager.translatef(0.5F, 0.5F, 0.5F);
                 GlStateManager.rotatef(j, 0.0F, 1.0F, 0.0F);
                 GlStateManager.translatef(-0.5F, -0.5F, -0.5F);
@@ -100,23 +117,6 @@ public class CabinetTileEntityRenderer<T extends TileEntity & IChestLid> extends
         }
         this.bindTexture(resourcelocation);
         return tallCabinet ? this.tallCabinet : this.simpleCabinet;
-    }
-
-    @SuppressWarnings("ConstantConditions")
-    public static int getColor(Block block) {
-        if (block == ModBlocks.acacia_cabinet) {
-            return 12215095;
-        } else if (block == ModBlocks.birch_cabinet) {
-            return 14139781;
-        } else if (block == ModBlocks.dark_oak_cabinet) {
-            return 5190168;
-        } else if (block == ModBlocks.jungle_cabinet) {
-            return 12093284;
-        } else if (block == ModBlocks.oak_cabinet) {
-            return 12096607;
-        } else {
-            return 8544570;
-        }
     }
 
     public static class TEISR extends ItemStackTileEntityRenderer {

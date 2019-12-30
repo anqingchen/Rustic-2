@@ -60,7 +60,7 @@ public class ChandelierBlock extends FallingBlock {
     private void checkFallable(World worldIn, BlockPos pos) {
         if (!suspended(worldIn, pos) && (worldIn.isAirBlock(pos.down()) || canFallThrough(worldIn.getBlockState(pos.down())) && pos.getY() >= 0)) {
             if (!worldIn.isRemote) {
-                FallingBlockEntity fallingblockentity = new FallingBlockEntity(worldIn, (double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, worldIn.getBlockState(pos));
+                FallingBlockEntity fallingblockentity = new FallingBlockEntity(worldIn, (double) pos.getX() + 0.5D, (double) pos.getY(), (double) pos.getZ() + 0.5D, worldIn.getBlockState(pos));
                 this.onStartFalling(fallingblockentity);
                 worldIn.addEntity(fallingblockentity);
             }

@@ -1,7 +1,7 @@
 package com.samaritans.rustic2.block;
 
 import com.samaritans.rustic2.entity.ModEntities;
-import com.samaritans.rustic2.network.DismountChairMessage;
+import com.samaritans.rustic2.network.DismountChairPacket;
 import com.samaritans.rustic2.network.PacketHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -152,7 +152,7 @@ public class ChairBlock extends Block {
         public void remove() {
             super.remove();
             if (world.isRemote) {
-                PacketHandler.sendToServer(new DismountChairMessage());
+                PacketHandler.sendToServer(new DismountChairPacket());
             }
         }
     }

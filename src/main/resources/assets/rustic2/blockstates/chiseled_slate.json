@@ -1,5 +1,7 @@
 {
   "variants": {
-    "": { "model": "rustic2:block/chiseled_slate" }
+    "": {
+      "model": "rustic2:block/chiseled_slate"
+    }
   }
 }

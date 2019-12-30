@@ -1,5 +1,7 @@
 {
   "variants": {
-    "": { "model": "rustic2:block/birch_cabinet" }
+    "": {
+      "model": "rustic2:block/birch_cabinet"
+    }
   }
 }

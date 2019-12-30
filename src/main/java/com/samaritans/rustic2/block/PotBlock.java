@@ -45,7 +45,7 @@ public class PotBlock extends ContainerBlock {
         if (stack.hasDisplayName()) {
             TileEntity tileentity = worldIn.getTileEntity(pos);
             if (tileentity instanceof PotTileEntity) {
-                ((PotTileEntity)tileentity).setCustomName(stack.getDisplayName());
+                ((PotTileEntity) tileentity).setCustomName(stack.getDisplayName());
             }
         }
     }

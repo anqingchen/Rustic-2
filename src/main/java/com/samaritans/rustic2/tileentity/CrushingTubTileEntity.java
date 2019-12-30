@@ -1,13 +1,14 @@
 package com.samaritans.rustic2.tileentity;
 
+import com.samaritans.rustic2.Rustic2API;
+import com.samaritans.rustic2.crafting.CrushingTubRecipe;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
@@ -30,6 +31,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Optional;
 
 public class CrushingTubTileEntity extends TileEntity {
     public static int capacity = FluidAttributes.BUCKET_VOLUME * 8;
@@ -77,16 +79,18 @@ public class CrushingTubTileEntity extends TileEntity {
         FluidTank tank = getFluidHandler();
         ItemStackHandler itemStackHandler = getItemHandler();
         if (!itemStackHandler.getStackInSlot(0).isEmpty()) {
-            ItemStack stack = itemStackHandler.getStackInSlot(0);
-            if (stack.getItem() == Items.OAK_SAPLING) {
-                FluidStack output = new FluidStack(Fluids.WATER, 250);
+            Optional<CrushingTubRecipe> optional = Rustic2API.crushingTubRecipes.values().stream().filter(r -> r.matches(itemStackHandler)).findFirst();
+            if (optional.isPresent()) {
+                CrushingTubRecipe recipe = optional.get();
+                FluidStack output = recipe.getOutput();
+                if (!tank.getFluid().isEmpty() && tank.getFluid().getFluid() != output.getFluid()) return;
                 if (tank.getFluidAmount() <= tank.getCapacity() - output.getAmount()) {
                     tank.fill(output, IFluidHandler.FluidAction.EXECUTE);
                     itemStackHandler.extractItem(0, 1, false);
-//                    ItemStack by = recipe.getByproduct().copy();
-//                    if (!by.isEmpty()) {
-//                        Block.spawnAsEntity(world, pos, by);
-//                    }
+                    ItemStack by = recipe.getByproduct().copy();
+                    if (!by.isEmpty()) {
+                        Block.spawnAsEntity(world, pos, by);
+                    }
                     this.getWorld().playSound(null, this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5, SoundEvents.BLOCK_SLIME_BLOCK_FALL, SoundCategory.BLOCKS, 0.5F, this.world.rand.nextFloat() * 0.1F + 0.9F);
                     this.sendUpdates();
                 }

@@ -10,7 +10,7 @@ import net.minecraftforge.fml.network.simple.SimpleChannel;
 
 public class PacketHandler {
     private static final String PROTOCOL_VERSION = Integer.toString(1);
-    private static final SimpleChannel HANDLER = NetworkRegistry.ChannelBuilder
+    public static final SimpleChannel HANDLER = NetworkRegistry.ChannelBuilder
             .named(new ResourceLocation(Rustic2.MODID, "main_channel"))
             .clientAcceptedVersions(PROTOCOL_VERSION::equals)
             .serverAcceptedVersions(PROTOCOL_VERSION::equals)
@@ -19,16 +19,23 @@ public class PacketHandler {
 
     public static void registerMessages() {
         int id = 0;
-        HANDLER.registerMessage(id++, DismountChairMessage.class, DismountChairMessage::encode, DismountChairMessage::decode, DismountChairMessage::handle);
+        HANDLER.registerMessage(id++, DismountChairPacket.class, DismountChairPacket::encode, DismountChairPacket::decode, DismountChairPacket::handle);
+        HANDLER.registerMessage(id++, SyncRecipesPacket.class, SyncRecipesPacket::encode, SyncRecipesPacket::decode, SyncRecipesPacket::handle);
     }
 
-    public static void sendToServer(IMessage msg) {
+    public static void sendToServer(Object msg) {
         HANDLER.sendToServer(msg);
     }
 
-    public static void sendTo(IMessage msg, ServerPlayerEntity player) {
+    public static void sendTo(Object msg, ServerPlayerEntity player) {
         if (!(player instanceof FakePlayer)) {
             HANDLER.sendTo(msg, player.connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+        }
+    }
+
+    public static void sendNonLocal(Object toSend, ServerPlayerEntity playerMP) {
+        if (playerMP.server.isDedicatedServer() || !playerMP.getGameProfile().getName().equals(playerMP.server.getServerOwner())) {
+            sendTo(toSend, playerMP);
         }
     }
 }

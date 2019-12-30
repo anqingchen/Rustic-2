@@ -1,5 +1,7 @@
 {
   "variants": {
-    "": { "model": "rustic2:block/candle" }
+    "": {
+      "model": "rustic2:block/candle"
+    }
   }
 }

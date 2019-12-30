@@ -29,16 +29,20 @@ import java.util.Map;
 import java.util.Random;
 
 public class WallCandleBlock extends CandleBlock {
+    public static final DirectionProperty HORIZONTAL_FACING = BlockStateProperties.HORIZONTAL_FACING;
     private static final Map<Direction, VoxelShape> SHAPES = Maps.newEnumMap(ImmutableMap.of(
             Direction.NORTH, VoxelShapes.create(0.35, 0.0, 0.7, 0.65, 0.8, 1.0),
             Direction.SOUTH, VoxelShapes.create(0.35, 0.0, 0.0, 0.65, 0.8, 0.3),
             Direction.WEST, VoxelShapes.create(0.7, 0.0, 0.35, 1.0, 0.8, 0.65),
             Direction.EAST, VoxelShapes.create(0.0D, 0.0, 0.35, 0.3, 0.8, 0.65)));
-    public static final DirectionProperty HORIZONTAL_FACING = BlockStateProperties.HORIZONTAL_FACING;
 
     public WallCandleBlock(Properties properties) {
         super(properties);
         this.setDefaultState(this.stateContainer.getBaseState().with(HORIZONTAL_FACING, Direction.NORTH));
+    }
+
+    public static VoxelShape getShape(BlockState p_220289_0_) {
+        return SHAPES.get(p_220289_0_.get(HORIZONTAL_FACING));
     }
 
     @Override
@@ -53,10 +57,6 @@ public class WallCandleBlock extends CandleBlock {
     @Override
     public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         return getShape(state);
-    }
-
-    public static VoxelShape getShape(BlockState p_220289_0_) {
-        return SHAPES.get(p_220289_0_.get(HORIZONTAL_FACING));
     }
 
     @Override
@@ -74,7 +74,7 @@ public class WallCandleBlock extends CandleBlock {
         BlockPos blockpos = context.getPos();
         Direction[] adirection = context.getNearestLookingDirections();
 
-        for(Direction direction : adirection) {
+        for (Direction direction : adirection) {
             if (direction.getAxis().isHorizontal()) {
                 Direction direction1 = direction.getOpposite();
                 blockstate = blockstate.with(HORIZONTAL_FACING, direction1);
@@ -108,11 +108,11 @@ public class WallCandleBlock extends CandleBlock {
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
         Direction direction = stateIn.get(HORIZONTAL_FACING);
-        double d0 = (double)pos.getX() + 0.5D;
-        double d1 = (double)pos.getY() + 0.7D;
-        double d2 = (double)pos.getZ() + 0.5D;
+        double d0 = (double) pos.getX() + 0.5D;
+        double d1 = (double) pos.getY() + 0.7D;
+        double d2 = (double) pos.getZ() + 0.5D;
         Direction direction1 = direction.getOpposite();
-        worldIn.addParticle(ParticleTypes.SMOKE, d0 + 0.27D * (double)direction1.getXOffset(), d1 + 0.22D, d2 + 0.27D * (double)direction1.getZOffset(), 0.0D, 0.0D, 0.0D);
-        worldIn.addParticle(ParticleTypes.FLAME, d0 + 0.27D * (double)direction1.getXOffset(), d1 + 0.22D, d2 + 0.27D * (double)direction1.getZOffset(), 0.0D, 0.0D, 0.0D);
+        worldIn.addParticle(ParticleTypes.SMOKE, d0 + 0.27D * (double) direction1.getXOffset(), d1 + 0.22D, d2 + 0.27D * (double) direction1.getZOffset(), 0.0D, 0.0D, 0.0D);
+        worldIn.addParticle(ParticleTypes.FLAME, d0 + 0.27D * (double) direction1.getXOffset(), d1 + 0.22D, d2 + 0.27D * (double) direction1.getZOffset(), 0.0D, 0.0D, 0.0D);
     }
 }

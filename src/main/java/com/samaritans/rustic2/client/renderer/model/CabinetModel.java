@@ -4,13 +4,13 @@ import net.minecraft.client.renderer.entity.model.RendererModel;
 import net.minecraft.client.renderer.model.Model;
 
 public class CabinetModel extends Model {
+    public RendererModel door;
     // fields
     RendererModel bottom;
     RendererModel top;
     RendererModel back;
     RendererModel right;
     RendererModel left;
-    public RendererModel door;
     RendererModel handle;
 
     public CabinetModel(boolean mirror) {

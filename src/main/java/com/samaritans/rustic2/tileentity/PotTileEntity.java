@@ -94,7 +94,7 @@ public class PotTileEntity extends LockableLootTileEntity {
 
     @Override
     public boolean isEmpty() {
-        for(ItemStack itemstack : this.potContents) {
+        for (ItemStack itemstack : this.potContents) {
             if (!itemstack.isEmpty()) {
                 return false;
             }
