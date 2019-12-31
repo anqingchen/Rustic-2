@@ -1,14 +1,24 @@
 package com.samaritans.rustic2;
 
 import com.samaritans.rustic2.block.ModBlocks;
+import com.samaritans.rustic2.client.model.FluidBottleModel;
 import com.samaritans.rustic2.client.renderer.CabinetTileEntityRenderer;
 import com.samaritans.rustic2.client.renderer.CrushingTubTileEntityRenderer;
 import com.samaritans.rustic2.crafting.SyncHandler;
+import com.samaritans.rustic2.fluid.ModFluids;
+import com.samaritans.rustic2.item.ModItems;
 import com.samaritans.rustic2.network.PacketHandler;
 import com.samaritans.rustic2.tileentity.CabinetTileEntity;
 import com.samaritans.rustic2.tileentity.CrushingTubTileEntity;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.model.ModelBakery;
+import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -48,6 +58,7 @@ public class Rustic2 {
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(ModEventHandler.class);
 
         MinecraftForge.EVENT_BUS.addListener(this::serverAboutToStart);
     }
@@ -61,6 +72,9 @@ public class Rustic2 {
         // do something that can only be done on the client
         ClientRegistry.bindTileEntitySpecialRenderer(CabinetTileEntity.class, new CabinetTileEntityRenderer<>());
         ClientRegistry.bindTileEntitySpecialRenderer(CrushingTubTileEntity.class, new CrushingTubTileEntityRenderer());
+
+        Minecraft.getInstance().getItemRenderer().getItemModelMesher().register(ModItems.FLUID_BOTTLE, FluidBottleModel.LOCATION);
+        ModelLoader.addSpecialModel(new ModelResourceLocation(new ResourceLocation(Rustic2.MODID, "fluid_bottle"), "inventory"));
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event) {

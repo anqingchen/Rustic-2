@@ -9,6 +9,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
@@ -59,14 +60,13 @@ public class CrushingTubTileEntity extends TileEntity {
                 sendUpdates();
                 return true;
             }
-        } else if (player.isSneaking() && fluidHandler.getFluidInTank(0).getAmount() > 0) {
+        } else if (hand == Hand.MAIN_HAND && player.isSneaking() && fluidHandler.getFluidInTank(0).getAmount() > 0) {
             FluidStack drained = fluidHandler.drain(fluidHandler.getTankCapacity(0), IFluidHandler.FluidAction.EXECUTE);
             SoundEvent soundevent = drained.getFluid().getAttributes().getEmptySound(drained);
             world.playSound(null, blockPos, soundevent, SoundCategory.BLOCKS, 1F, 1F);
             sendUpdates();
             return true;
-        }
-        if (itemStackHandler.getStackInSlot(0) != ItemStack.EMPTY && !world.isRemote) {
+        } else if (hand == Hand.MAIN_HAND && itemStackHandler.getStackInSlot(0) != ItemStack.EMPTY && !world.isRemote) {
             InventoryHelper.spawnItemStack(world, player.posX, player.posY, player.posZ, itemStackHandler.getStackInSlot(0));
             itemStackHandler.setStackInSlot(0, ItemStack.EMPTY);
             sendUpdates();
