@@ -72,9 +72,6 @@ public class Rustic2 {
         // do something that can only be done on the client
         ClientRegistry.bindTileEntitySpecialRenderer(CabinetTileEntity.class, new CabinetTileEntityRenderer<>());
         ClientRegistry.bindTileEntitySpecialRenderer(CrushingTubTileEntity.class, new CrushingTubTileEntityRenderer());
-
-        Minecraft.getInstance().getItemRenderer().getItemModelMesher().register(ModItems.FLUID_BOTTLE, FluidBottleModel.LOCATION);
-        ModelLoader.addSpecialModel(new ModelResourceLocation(new ResourceLocation(Rustic2.MODID, "fluid_bottle"), "inventory"));
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event) {

@@ -1,9 +1,11 @@
 package com.samaritans.rustic2;
 
+import com.samaritans.rustic2.client.model.FluidBottleModel;
 import com.samaritans.rustic2.item.FluidBottleItem;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FlowingFluidBlock;
+import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluids;
@@ -11,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -25,7 +28,20 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
+import java.util.Map;
+
 public class ModEventHandler {
+
+    @SubscribeEvent
+    public static void onModelBake(ModelBakeEvent event) {
+        for (Map.Entry<ResourceLocation, IBakedModel> e : event.getModelRegistry().entrySet()) {
+            if (e.getValue() instanceof FluidBottleModel.BakedFluidBottle) {
+                ResourceLocation stripVariant = new ResourceLocation(e.getKey().getNamespace(), e.getKey().getPath());
+                ModelResourceLocation itemPath = new ModelResourceLocation(stripVariant, "inventory");
+                event.getModelRegistry().put(itemPath, e.getValue());
+            }
+        }
+    }
 
     @SubscribeEvent
     public static void onPlayerUseGlassBottle(PlayerInteractEvent.RightClickBlock event) {

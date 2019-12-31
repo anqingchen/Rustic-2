@@ -8,16 +8,13 @@ import com.samaritans.rustic2.Rustic2;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.model.*;
-import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.ISprite;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.resources.IResource;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
@@ -29,7 +26,6 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.versions.forge.ForgeVersion;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nonnull;
@@ -60,14 +56,14 @@ public class FluidBottleModel implements IUnbakedModel {
 
     public FluidBottleModel(ResourceLocation bottleLocation, ResourceLocation liquidLocation, Fluid fluid, boolean tint) {
         this.fluid = fluid;
-        this.bottleLocation = new ResourceLocation("minecraft", "item/potion_bottle_drinkable");
+        this.bottleLocation = new ResourceLocation("minecraft", "item/potion");
         this.liquidLocation = new ResourceLocation("minecraft", "item/potion_overlay");
         this.tint = tint;
     }
 
     @Override
     public IUnbakedModel retexture(ImmutableMap<String, String> textures) {
-        ResourceLocation base = new ResourceLocation("minecraft", "item/potion_bottle_drinkable");
+        ResourceLocation base = new ResourceLocation("minecraft", "item/potion");
         ResourceLocation liquid = new ResourceLocation("minecraft", "item/potion_overlay");
 
 //        if (textures.containsKey("base"))
@@ -196,8 +192,7 @@ public class FluidBottleModel implements IUnbakedModel {
         }
     }
 
-    private static final class BakedFluidBottle extends BakedItemModel {
-
+    public static class BakedFluidBottle extends BakedItemModel {
         private final FluidBottleModel parent;
         private final Map<String, IBakedModel> cache;
         private final VertexFormat format;
