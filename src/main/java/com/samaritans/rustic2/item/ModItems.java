@@ -16,7 +16,7 @@ public class ModItems {
     @SubscribeEvent
     public static void onRegisterBlockItems(final RegistryEvent.Register<Item> event) {
         event.getRegistry().registerAll(
-                Util.setup(new FluidBottleItem(new Item.Properties().maxStackSize(1), 1000), "fluid_bottle")
+                Util.setup(new FluidBottleItem(new Item.Properties().maxStackSize(64)), "fluid_bottle")
         );
     }
 }

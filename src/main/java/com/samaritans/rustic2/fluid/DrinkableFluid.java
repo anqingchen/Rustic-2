@@ -6,7 +6,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
-import net.minecraftforge.fluids.capability.ItemFluidContainer;
 
 public abstract class DrinkableFluid extends ForgeFlowingFluid.Source {
     public DrinkableFluid(Properties properties) {

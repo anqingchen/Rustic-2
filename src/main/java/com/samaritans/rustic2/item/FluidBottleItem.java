@@ -14,6 +14,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.ItemFluidContainer;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStackSimple;
 
@@ -29,10 +31,9 @@ public class FluidBottleItem extends ItemFluidContainer {
 
     /**
      * @param properties Item properties
-     * @param capacity   The maximum capacity of this fluid container.
      */
-    public FluidBottleItem(Properties properties, int capacity) {
-        super(properties, capacity);
+    public FluidBottleItem(Properties properties) {
+        super(properties, 1000);
     }
 
     @Override
@@ -56,7 +57,7 @@ public class FluidBottleItem extends ItemFluidContainer {
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
         playerIn.setActiveHand(handIn);
         //System.out.println(playerIn.getHeldItem(handIn).getTagCompound());
-        return new ActionResult<>(ActionResultType.PASS, playerIn.getHeldItem(handIn));
+        return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getHeldItem(handIn));
     }
 
     @Override
@@ -75,13 +76,13 @@ public class FluidBottleItem extends ItemFluidContainer {
     @Override
     public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
         PlayerEntity entityplayer = entityLiving instanceof PlayerEntity ? (PlayerEntity) entityLiving : null;
-        FluidStack fluidstack = this.getFluid(stack);
+        IFluidHandlerItem handler = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).orElseThrow(RuntimeException::new);
+
+        FluidStack fluidstack = handler.getFluidInTank(0);
         Fluid fluid = fluidstack.getFluid();
 
-        if (!worldIn.isRemote) {
-            if (fluid instanceof DrinkableFluid && entityplayer != null) {
-                ((DrinkableFluid) fluid).onDrank(worldIn, entityplayer, stack, fluidstack);
-            }
+        if (!worldIn.isRemote && fluid instanceof DrinkableFluid && entityplayer != null) {
+            ((DrinkableFluid) fluid).onDrank(worldIn, entityplayer, stack, fluidstack);
         }
 
 //        if (entityplayer != null) {
@@ -90,9 +91,6 @@ public class FluidBottleItem extends ItemFluidContainer {
 
         if (entityplayer == null || !entityplayer.abilities.isCreativeMode) {
             stack.shrink(1);
-        }
-
-        if (entityplayer == null || !entityplayer.abilities.isCreativeMode) {
             if (stack.isEmpty()) {
                 return new ItemStack(Items.GLASS_BOTTLE);
             }

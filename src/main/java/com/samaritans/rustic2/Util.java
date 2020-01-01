@@ -2,7 +2,6 @@ package com.samaritans.rustic2;
 
 import com.google.common.base.Preconditions;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceContext;
