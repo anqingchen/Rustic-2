@@ -36,11 +36,12 @@ public class ModFluids {
     public static void onRegisterFluids(RegistryEvent.Register<Fluid> event) {
         final ForgeFlowingFluid.Properties olive_oil_properties = new ForgeFlowingFluid.Properties(() -> ModFluids.OLIVE_OIL_STILL, () -> ModFluids.OLIVE_OIL_FLOW,
                 FluidAttributes.builder(new ResourceLocation(Rustic2.MODID, "block/olive_oil_still"), new ResourceLocation(Rustic2.MODID, "block/olive_oil_flow"))
-                        .density(920).viscosity(2000).overlay(new ResourceLocation(Rustic2.MODID, "block/olive_oil_overlay")))
+                        .density(920).viscosity(2000).overlay(new ResourceLocation(Rustic2.MODID, "block/olive_oil_overlay")).color(0xFF86904D))
                 .bucket(() -> ModFluids.OLIVE_OIL_BUCKET).block(() -> ModFluids.OLIVE_OIL);
 
 
         event.getRegistry().registerAll(
+                // Olive Oil
                 Util.setup(new DrinkableFluid(olive_oil_properties) {
                     @Override
                     public void onDrank(World world, PlayerEntity player, ItemStack stack, FluidStack fluid) {
