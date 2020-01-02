@@ -21,7 +21,7 @@ public class Util {
     @Nonnull
     public static <T extends IForgeRegistryEntry<T>> T setup(@Nonnull final T entry, @Nonnull final String name) {
         Preconditions.checkNotNull(name, "Name to assign to entry cannot be null!");
-        return setup(entry, new ResourceLocation(Rustic2.MODID, name));
+        return setup(entry, new ResourceLocation(Rustic.MODID, name));
     }
 
     /**

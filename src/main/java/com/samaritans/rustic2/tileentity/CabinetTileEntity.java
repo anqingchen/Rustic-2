@@ -1,6 +1,6 @@
 package com.samaritans.rustic2.tileentity;
 
-import com.samaritans.rustic2.Rustic2;
+import com.samaritans.rustic2.Rustic;
 import com.samaritans.rustic2.block.CabinetBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -220,7 +220,7 @@ public class CabinetTileEntity extends LockableLootTileEntity implements ITickab
 
     @Override
     protected ITextComponent getDefaultName() {
-        return new TranslationTextComponent(Rustic2.MODID + ".container.cabinet");
+        return new TranslationTextComponent(Rustic.MODID + ".container.cabinet");
     }
 
     @Override

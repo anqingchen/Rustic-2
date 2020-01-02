@@ -1,6 +1,6 @@
 package com.samaritans.rustic2.network;
 
-import com.samaritans.rustic2.Rustic2;
+import com.samaritans.rustic2.Rustic;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.FakePlayer;
@@ -11,7 +11,7 @@ import net.minecraftforge.fml.network.simple.SimpleChannel;
 public class PacketHandler {
     private static final String PROTOCOL_VERSION = Integer.toString(1);
     public static final SimpleChannel HANDLER = NetworkRegistry.ChannelBuilder
-            .named(new ResourceLocation(Rustic2.MODID, "main_channel"))
+            .named(new ResourceLocation(Rustic.MODID, "main_channel"))
             .clientAcceptedVersions(PROTOCOL_VERSION::equals)
             .serverAcceptedVersions(PROTOCOL_VERSION::equals)
             .networkProtocolVersion(() -> PROTOCOL_VERSION)

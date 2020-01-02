@@ -1,8 +1,8 @@
 package com.samaritans.rustic2.crafting;
 
 import com.google.common.collect.ImmutableMap;
-import com.samaritans.rustic2.Rustic2;
-import com.samaritans.rustic2.Rustic2API;
+import com.samaritans.rustic2.Rustic;
+import com.samaritans.rustic2.RusticAPI;
 import com.samaritans.rustic2.network.PacketHandler;
 import com.samaritans.rustic2.network.SyncRecipesPacket;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -31,7 +31,7 @@ import java.util.function.Predicate;
 
 public class SyncHandler {
     private static SyncRecipesPacket syncPacket() {
-        return new SyncRecipesPacket(Rustic2API.crushingTubRecipes);
+        return new SyncRecipesPacket(RusticAPI.crushingTubRecipes);
     }
 
     public static class ReloadListener implements ISelectiveResourceReloadListener {
@@ -44,21 +44,21 @@ public class SyncHandler {
             );
             MinecraftForge.EVENT_BUS.post(event);
 
-            Rustic2API.crushingTubRecipes = ImmutableMap.copyOf(crushingTub);
+            RusticAPI.crushingTubRecipes = ImmutableMap.copyOf(crushingTub);
 
             PacketHandler.HANDLER.send(PacketDistributor.ALL.noArg(), syncPacket());
         }
     }
 
-    @Mod.EventBusSubscriber(modid = Rustic2.MODID, value = Dist.CLIENT)
+    @Mod.EventBusSubscriber(modid = Rustic.MODID, value = Dist.CLIENT)
     public static class ClientEvents {
         @SubscribeEvent
         public static void clientLogout(ClientPlayerNetworkEvent.LoggedOutEvent event) {
-            Rustic2API.crushingTubRecipes = Collections.emptyMap();
+            RusticAPI.crushingTubRecipes = Collections.emptyMap();
         }
     }
 
-    @Mod.EventBusSubscriber(modid = Rustic2.MODID)
+    @Mod.EventBusSubscriber(modid = Rustic.MODID)
     public static class CommonEvents {
         @SubscribeEvent
         public static void serverLogin(PlayerEvent.PlayerLoggedInEvent event) {

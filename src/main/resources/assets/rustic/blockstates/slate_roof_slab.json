@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "rustic:block/slate_roof_slab"
+    },
+    "type=top": {
+      "model": "rustic:block/slate_roof_slab_top"
+    },
+    "type=double": {
+      "model": "rustic:block/slate_roof"
+    }
+  }
+}

@@ -1,6 +1,6 @@
 package com.samaritans.rustic2.tileentity;
 
-import com.samaritans.rustic2.Rustic2;
+import com.samaritans.rustic2.Rustic;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.ChestContainer;
@@ -79,7 +79,7 @@ public class PotTileEntity extends LockableLootTileEntity {
 
     @Override
     protected ITextComponent getDefaultName() {
-        return new TranslationTextComponent(Rustic2.MODID + ".container.pot");
+        return new TranslationTextComponent(Rustic.MODID + ".container.pot");
     }
 
     @Override

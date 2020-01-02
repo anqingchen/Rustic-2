@@ -1,6 +1,6 @@
 package com.samaritans.rustic2.network;
 
-import com.samaritans.rustic2.Rustic2API;
+import com.samaritans.rustic2.RusticAPI;
 import com.samaritans.rustic2.crafting.CrushingTubRecipe;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
@@ -41,7 +41,7 @@ public class SyncRecipesPacket {
 
     public void handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            Rustic2API.crushingTubRecipes = crushingTub;
+            RusticAPI.crushingTubRecipes = crushingTub;
         });
         ctx.get().setPacketHandled(true);
     }

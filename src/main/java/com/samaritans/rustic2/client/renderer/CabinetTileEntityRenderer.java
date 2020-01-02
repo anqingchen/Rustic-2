@@ -21,8 +21,8 @@ import net.minecraftforge.client.model.animation.TileEntityRendererFast;
 
 // todo: possibly allow mirror, or render items inside cabinet?
 public class CabinetTileEntityRenderer<T extends TileEntity & IChestLid> extends TileEntityRendererFast<T> {
-    protected static final ResourceLocation TEXTURE_NORMAL = new ResourceLocation("rustic2:textures/model/cabinet.png");
-    protected static final ResourceLocation TEXTURE_DOUBLE = new ResourceLocation("rustic2:textures/model/cabinet_double.png");
+    protected static final ResourceLocation TEXTURE_NORMAL = new ResourceLocation("rustic:textures/model/cabinet.png");
+    protected static final ResourceLocation TEXTURE_DOUBLE = new ResourceLocation("rustic:textures/model/cabinet_double.png");
     protected final CabinetModel simpleCabinet = new CabinetModel(false);
     //    protected final CabinetModel simpleCabinetM = new CabinetModel(true);
     protected final TallCabinetModel tallCabinet = new TallCabinetModel(false);

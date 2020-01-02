@@ -1,6 +1,6 @@
 package com.samaritans.rustic2.tileentity;
 
-import com.samaritans.rustic2.Rustic2API;
+import com.samaritans.rustic2.RusticAPI;
 import com.samaritans.rustic2.crafting.CrushingTubRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -78,7 +78,7 @@ public class CrushingTubTileEntity extends TileEntity {
         FluidTank tank = getFluidHandler();
         ItemStackHandler itemStackHandler = getItemHandler();
         if (!itemStackHandler.getStackInSlot(0).isEmpty()) {
-            Optional<CrushingTubRecipe> optional = Rustic2API.crushingTubRecipes.values().stream().filter(r -> r.matches(itemStackHandler)).findFirst();
+            Optional<CrushingTubRecipe> optional = RusticAPI.crushingTubRecipes.values().stream().filter(r -> r.matches(itemStackHandler)).findFirst();
             if (optional.isPresent()) {
                 CrushingTubRecipe recipe = optional.get();
                 FluidStack output = recipe.getOutput();

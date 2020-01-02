@@ -1,6 +1,6 @@
 package com.samaritans.rustic2.block;
 
-import com.samaritans.rustic2.Rustic2;
+import com.samaritans.rustic2.Rustic;
 import com.samaritans.rustic2.Util;
 import com.samaritans.rustic2.client.renderer.CabinetTileEntityRenderer;
 import net.minecraft.block.*;
@@ -16,8 +16,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 
-@Mod.EventBusSubscriber(modid = Rustic2.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-@ObjectHolder(Rustic2.MODID)
+@Mod.EventBusSubscriber(modid = Rustic.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@ObjectHolder(Rustic.MODID)
 public class ModBlocks {
     public static final Block slate = null;
     public static final Block slate_roof = null;
@@ -61,7 +61,18 @@ public class ModBlocks {
     public static final Block oak_cabinet = null;
     public static final Block spruce_cabinet = null;
 
-    public static final Block pot = null;
+    public static final Block pot0 = null;
+    public static final Block pot1 = null;
+    public static final Block pot2 = null;
+    public static final Block pot3 = null;
+    public static final Block pot4 = null;
+    public static final Block pot5 = null;
+    public static final Block pot6 = null;
+    public static final Block pot7 = null;
+    public static final Block pot8 = null;
+    public static final Block pot9 = null;
+    public static final Block pot10 = null;
+    public static final Block pot11 = null;
 
     public static final Block crushing_tub = null;
 
@@ -112,9 +123,20 @@ public class ModBlocks {
                 Util.setup(new CabinetBlock(PLANKS_PROPERTIES), "jungle_cabinet"),
                 Util.setup(new CabinetBlock(PLANKS_PROPERTIES), "oak_cabinet"),
                 Util.setup(new CabinetBlock(PLANKS_PROPERTIES), "spruce_cabinet"),
-                // todo: more pot variants
+
                 // Pots
-                Util.setup(new PotBlock(ROCK_PROPERTIES), "pot"),
+                Util.setup(new PotBlock(ROCK_PROPERTIES), "pot0"),
+                Util.setup(new PotBlock(ROCK_PROPERTIES), "pot1"),
+                Util.setup(new PotBlock(ROCK_PROPERTIES), "pot2"),
+                Util.setup(new PotBlock(ROCK_PROPERTIES), "pot3"),
+                Util.setup(new PotBlock(ROCK_PROPERTIES), "pot4"),
+                Util.setup(new PotBlock(ROCK_PROPERTIES), "pot5"),
+                Util.setup(new PotBlock(ROCK_PROPERTIES), "pot6"),
+                Util.setup(new PotBlock(ROCK_PROPERTIES), "pot7"),
+                Util.setup(new PotBlock(ROCK_PROPERTIES), "pot8"),
+                Util.setup(new PotBlock(ROCK_PROPERTIES), "pot9"),
+                Util.setup(new PotBlock(ROCK_PROPERTIES), "pot10"),
+                Util.setup(new PotBlock(ROCK_PROPERTIES), "pot11"),
 
                 Util.setup(new CrushingTubBlock(PLANKS_PROPERTIES), "crushing_tub")
         );
@@ -123,8 +145,8 @@ public class ModBlocks {
     @SubscribeEvent
     public static void onRegisterBlockItems(final RegistryEvent.Register<Item> event) {
         final IForgeRegistry<Item> registry = event.getRegistry();
-        final Item.Properties properties = new Item.Properties().group(Rustic2.TAB);
-        ForgeRegistries.BLOCKS.getValues().stream().filter(block -> block.getRegistryName().getNamespace().equals(Rustic2.MODID))
+        final Item.Properties properties = new Item.Properties().group(Rustic.TAB);
+        ForgeRegistries.BLOCKS.getValues().stream().filter(block -> block.getRegistryName().getNamespace().equals(Rustic.MODID))
                 .filter(block -> !(block instanceof CandleBlock) && !(block instanceof CabinetBlock) && !(block instanceof FlowingFluidBlock)).forEach(block -> {
             final BlockItem blockItem = new BlockItem(block, properties);
             registry.register(Util.setup(blockItem, block.getRegistryName()));
@@ -135,7 +157,7 @@ public class ModBlocks {
 
         // Register TEISR Items
         ForgeRegistries.BLOCKS.getValues().stream().filter(block -> block instanceof CabinetBlock).forEach(block -> {
-            final BlockItem blockItem = new BlockItem(block, new Item.Properties().setTEISR(() -> CabinetTileEntityRenderer.TEISR::new).group(Rustic2.TAB));
+            final BlockItem blockItem = new BlockItem(block, new Item.Properties().setTEISR(() -> CabinetTileEntityRenderer.TEISR::new).group(Rustic.TAB));
             registry.register(Util.setup(blockItem, block.getRegistryName()));
         });
 

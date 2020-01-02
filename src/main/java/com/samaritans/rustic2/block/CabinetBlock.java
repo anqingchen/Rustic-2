@@ -1,6 +1,6 @@
 package com.samaritans.rustic2.block;
 
-import com.samaritans.rustic2.Rustic2;
+import com.samaritans.rustic2.Rustic;
 import com.samaritans.rustic2.tileentity.CabinetTileEntity;
 import com.samaritans.rustic2.tileentity.ModTileEntityType;
 import net.minecraft.block.Block;
@@ -73,7 +73,7 @@ public class CabinetBlock extends ContainerBlock {
                     if (cabinetTileEntity.hasCustomName()) {
                         return cabinetTileEntity.getDisplayName();
                     } else {
-                        return (cabinetTileEntity1.hasCustomName() ? cabinetTileEntity1.getDisplayName() : new TranslationTextComponent(Rustic2.MODID + ".container.cabinetDouble"));
+                        return (cabinetTileEntity1.hasCustomName() ? cabinetTileEntity1.getDisplayName() : new TranslationTextComponent(Rustic.MODID + ".container.cabinetDouble"));
                     }
                 }
             };

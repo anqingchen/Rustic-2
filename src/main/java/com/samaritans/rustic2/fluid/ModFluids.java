@@ -1,6 +1,6 @@
 package com.samaritans.rustic2.fluid;
 
-import com.samaritans.rustic2.Rustic2;
+import com.samaritans.rustic2.Rustic;
 import com.samaritans.rustic2.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.FlowingFluidBlock;
@@ -22,8 +22,8 @@ import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ObjectHolder;
 
-@Mod.EventBusSubscriber(modid = Rustic2.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-@ObjectHolder(Rustic2.MODID)
+@Mod.EventBusSubscriber(modid = Rustic.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@ObjectHolder(Rustic.MODID)
 public class ModFluids {
     public static final FlowingFluid OLIVE_OIL_STILL = null;
     public static final FlowingFluid OLIVE_OIL_FLOW = null;
@@ -65,7 +65,7 @@ public class ModFluids {
     @SubscribeEvent
     public static void onRegisterItems(RegistryEvent.Register<Item> event) {
         event.getRegistry().registerAll(
-                Util.setup(new BucketItem(() -> ModFluids.OLIVE_OIL_STILL, new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(Rustic2.TAB)), "olive_oil_bucket")
+                Util.setup(new BucketItem(() -> ModFluids.OLIVE_OIL_STILL, new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(Rustic.TAB)), "olive_oil_bucket")
         );
     }
 }
