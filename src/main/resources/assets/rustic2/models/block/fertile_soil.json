@@ -1,0 +1,8 @@
+{
+  "parent": "block/template_farmland",
+  "textures": {
+    "particle": "rustic2:block/fertile_soil",
+    "dirt": "rustic2:block/fertile_soil",
+    "top": "block/farmland_moist"
+  }
+}

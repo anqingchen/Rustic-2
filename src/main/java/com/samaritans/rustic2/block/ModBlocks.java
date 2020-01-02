@@ -38,6 +38,7 @@ public class ModBlocks {
     public static final Block rope = null;
     public static final Block stake = null;
     public static final Block chandelier = null;
+    public static final Block fertile_soil = null;
 
     public static final Block acacia_table = null;
     public static final Block birch_table = null;
@@ -88,6 +89,7 @@ public class ModBlocks {
                 Util.setup(new RopeBlock(Block.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0)), "rope"),
                 Util.setup(new StakeBlock(Block.Properties.create(Material.WOOD).hardnessAndResistance(2.0F)), "stake"),
                 Util.setup(new ChandelierBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(5.0F, 1200.0F).harvestTool(ToolType.PICKAXE)), "chandelier"),
+                Util.setup(new FertileSoilBlock(Block.Properties.create(Material.EARTH).harvestTool(ToolType.SHOVEL).hardnessAndResistance(0.5F).sound(SoundType.GROUND)), "fertile_soil"),
                 // todo: eventually add rustic woods to this list
                 // Tables
                 Util.setup(new TableBlock(PLANKS_PROPERTIES), "acacia_table"),

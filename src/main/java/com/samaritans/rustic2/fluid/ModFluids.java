@@ -34,9 +34,12 @@ public class ModFluids {
 
     @SubscribeEvent
     public static void onRegisterFluids(RegistryEvent.Register<Fluid> event) {
+        final ResourceLocation STILL = new ResourceLocation("minecraft", "block/water_still");
+        final ResourceLocation FLOW = new ResourceLocation("minecraft", "block/water_flow");
+        final ResourceLocation OVERLAY = new ResourceLocation("minecraft", "block/water_overlay");
+
         final ForgeFlowingFluid.Properties olive_oil_properties = new ForgeFlowingFluid.Properties(() -> ModFluids.OLIVE_OIL_STILL, () -> ModFluids.OLIVE_OIL_FLOW,
-                FluidAttributes.builder(new ResourceLocation(Rustic2.MODID, "block/olive_oil_still"), new ResourceLocation(Rustic2.MODID, "block/olive_oil_flow"))
-                        .density(920).viscosity(2000).overlay(new ResourceLocation(Rustic2.MODID, "block/olive_oil_overlay")).color(0xFF86904D))
+                FluidAttributes.builder(STILL, FLOW).density(920).viscosity(2000).overlay(OVERLAY).color(0xFF86904D))
                 .bucket(() -> ModFluids.OLIVE_OIL_BUCKET).block(() -> ModFluids.OLIVE_OIL);
 
 

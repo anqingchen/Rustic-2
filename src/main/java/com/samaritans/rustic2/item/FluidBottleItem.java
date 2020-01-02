@@ -116,4 +116,14 @@ public class FluidBottleItem extends ItemFluidContainer {
         bottlestack.setTag(tag);
         return bottlestack;
     }
+
+    @Override
+    public String getTranslationKey(ItemStack stack) {
+        FluidStack fluidStack = getFluid(stack);
+        if (fluidStack != null && !fluidStack.isEmpty()) {
+            String unloc = fluidStack.getTranslationKey();
+            return "item." + unloc.substring(6, unloc.length() - 5) + "bottle";
+        }
+        return super.getTranslationKey(stack);
+    }
 }
