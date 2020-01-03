@@ -35,6 +35,8 @@ public class ModBlocks {
     public static final Block granite_pillar = null;
     public static final Block candle = null;
     public static final Block wall_candle = null;
+    public static final Block gold_candle = null;
+    public static final Block gold_wall_candle = null;
     public static final Block rope = null;
     public static final Block stake = null;
     public static final Block chandelier = null;
@@ -97,9 +99,12 @@ public class ModBlocks {
                 Util.setup(new RotatedPillarBlock(ROCK_PROPERTIES), "granite_pillar"),
                 Util.setup(new CandleBlock(Block.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(1.5F, 6.0F).harvestTool(ToolType.PICKAXE).lightValue(14)), "candle"),
                 Util.setup(new WallCandleBlock(Block.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(1.5F, 6.0F).harvestTool(ToolType.PICKAXE).lightValue(14)), "wall_candle"),
+                Util.setup(new CandleBlock(Block.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(1.5F, 6.0F).harvestTool(ToolType.PICKAXE).lightValue(14)), "gold_candle"),
+                Util.setup(new WallCandleBlock(Block.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(1.5F, 6.0F).harvestTool(ToolType.PICKAXE).lightValue(14)), "gold_wall_candle"),
                 Util.setup(new RopeBlock(Block.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0)), "rope"),
                 Util.setup(new StakeBlock(Block.Properties.create(Material.WOOD).hardnessAndResistance(2.0F)), "stake"),
                 Util.setup(new ChandelierBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(5.0F, 1200.0F).harvestTool(ToolType.PICKAXE)), "chandelier"),
+                Util.setup(new ChandelierBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(5.0F, 1200.0F).harvestTool(ToolType.PICKAXE)), "gold_chandelier"),
                 Util.setup(new FertileSoilBlock(Block.Properties.create(Material.EARTH).harvestTool(ToolType.SHOVEL).hardnessAndResistance(0.5F).sound(SoundType.GROUND)), "fertile_soil"),
                 // todo: eventually add rustic woods to this list
                 // Tables
@@ -154,6 +159,7 @@ public class ModBlocks {
 
         // Register WallOrFloorItem
         registry.register(Util.setup(new WallOrFloorItem(candle, wall_candle, properties), "candle"));
+        registry.register(Util.setup(new WallOrFloorItem(gold_candle, gold_wall_candle, properties), "gold_candle"));
 
         // Register TEISR Items
         ForgeRegistries.BLOCKS.getValues().stream().filter(block -> block instanceof CabinetBlock).forEach(block -> {

@@ -1,5 +1,6 @@
 package com.samaritans.rustic2.client.renderer;
 
+import com.mojang.blaze3d.platform.GLX;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.samaritans.rustic2.block.CabinetBlock;
 import com.samaritans.rustic2.block.ModBlocks;
@@ -48,9 +49,9 @@ public class CabinetTileEntityRenderer<T extends TileEntity & IChestLid> extends
 
     @Override
     public void render(T tileEntityIn, double x, double y, double z, float partialTicks, int destroyStage) {
-        GlStateManager.enableDepthTest();
-        GlStateManager.depthFunc(515);
-        GlStateManager.depthMask(true);
+//        GlStateManager.enableDepthTest();
+//        GlStateManager.depthFunc(515);
+//        GlStateManager.depthMask(true);
         BlockState blockstate = tileEntityIn.hasWorld() ? tileEntityIn.getBlockState() : Blocks.CHEST.getDefaultState().with(ChestBlock.FACING, Direction.SOUTH);
         CabinetBlock.CabinetType cabinetType = blockstate.has(CabinetBlock.TYPE) ? blockstate.get(CabinetBlock.TYPE) : CabinetBlock.CabinetType.SINGLE;
         if (cabinetType != CabinetBlock.CabinetType.TOP) {
@@ -75,6 +76,11 @@ public class CabinetTileEntityRenderer<T extends TileEntity & IChestLid> extends
             float g = ((color >> 8) & 0xFF) / 255f;
             float b = ((color) & 0xFF) / 255f;
             GlStateManager.color3f(r, g, b);
+
+            int packedLight = getWorld().getCombinedLight(tileEntityIn.getPos().up(), 0);
+            int skyLight = packedLight & 0xFF;
+            int blockLight = packedLight >> 16 & 0xFF;
+            GLX.glMultiTexCoord2f(GLX.GL_TEXTURE1, skyLight, blockLight);
 
             GlStateManager.translatef((float) x, (float) y + 1.0F, (float) z + 1.0F);
             GlStateManager.scalef(1.0F, -1.0F, -1.0F);
@@ -120,9 +126,9 @@ public class CabinetTileEntityRenderer<T extends TileEntity & IChestLid> extends
 
         @Override
         public void renderByItem(ItemStack stack) {
-            GlStateManager.enableDepthTest();
-            GlStateManager.depthFunc(515);
-            GlStateManager.depthMask(true);
+//            GlStateManager.enableDepthTest();
+//            GlStateManager.depthFunc(515);
+//            GlStateManager.depthMask(true);
 
             Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE_NORMAL);
 
