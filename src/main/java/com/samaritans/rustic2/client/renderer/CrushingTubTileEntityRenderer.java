@@ -67,6 +67,7 @@ public class CrushingTubTileEntityRenderer extends TileEntityRenderer<CrushingTu
             int lightx = i >> 0x10 & 0xFFFF;
             int lighty = i & 0xFFFF;
 
+            GlStateManager.pushMatrix();
             GlStateManager.pushTextureAttributes();
             GlStateManager.disableCull();
             GlStateManager.disableLighting();
@@ -89,6 +90,7 @@ public class CrushingTubTileEntityRenderer extends TileEntityRenderer<CrushingTu
             GlStateManager.enableLighting();
             GlStateManager.enableCull();
             GlStateManager.popAttributes();
+            GlStateManager.popMatrix();
         }
     }
 }

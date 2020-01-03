@@ -3,13 +3,17 @@ package com.samaritans.rustic2;
 import com.samaritans.rustic2.block.ModBlocks;
 import com.samaritans.rustic2.client.renderer.CabinetTileEntityRenderer;
 import com.samaritans.rustic2.client.renderer.CrushingTubTileEntityRenderer;
+import com.samaritans.rustic2.client.renderer.PotTileEntityRenderer;
 import com.samaritans.rustic2.crafting.SyncHandler;
+import com.samaritans.rustic2.item.ModItems;
 import com.samaritans.rustic2.network.PacketHandler;
 import com.samaritans.rustic2.tileentity.CabinetTileEntity;
 import com.samaritans.rustic2.tileentity.CrushingTubTileEntity;
+import com.samaritans.rustic2.tileentity.PotTileEntity;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -37,14 +41,17 @@ public class Rustic {
     private static final Logger LOGGER = LogManager.getLogger();
 
     public Rustic() {
+        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         // Register the setup method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+        modEventBus.addListener(this::setup);
         // Register the enqueueIMC method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
+        modEventBus.addListener(this::enqueueIMC);
         // Register the processIMC method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
+        modEventBus.addListener(this::processIMC);
         // Register the doClientStuff method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
+        modEventBus.addListener(this::doClientStuff);
+
+        ModItems.ITEMS.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
@@ -62,6 +69,7 @@ public class Rustic {
         // do something that can only be done on the client
         ClientRegistry.bindTileEntitySpecialRenderer(CabinetTileEntity.class, new CabinetTileEntityRenderer<>());
         ClientRegistry.bindTileEntitySpecialRenderer(CrushingTubTileEntity.class, new CrushingTubTileEntityRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(PotTileEntity.class, new PotTileEntityRenderer());
 
         ModItemColors.register();
     }

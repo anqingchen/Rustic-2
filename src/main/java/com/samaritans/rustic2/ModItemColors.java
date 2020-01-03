@@ -9,6 +9,6 @@ public class ModItemColors {
     private static final FluidContainerColorer colorer = new FluidContainerColorer();
 
     public static void register() {
-        minecraft.getItemColors().register(colorer, ModItems.FLUID_BOTTLE);
+        minecraft.getItemColors().register(colorer, ModItems.FLUID_BOTTLE.get());
     }
 }

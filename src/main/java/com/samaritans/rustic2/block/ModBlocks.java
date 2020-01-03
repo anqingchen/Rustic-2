@@ -160,6 +160,5 @@ public class ModBlocks {
             final BlockItem blockItem = new BlockItem(block, new Item.Properties().setTEISR(() -> CabinetTileEntityRenderer.TEISR::new).group(Rustic.TAB));
             registry.register(Util.setup(blockItem, block.getRegistryName()));
         });
-
     }
 }

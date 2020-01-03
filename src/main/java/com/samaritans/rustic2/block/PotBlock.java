@@ -18,6 +18,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidUtil;
 
 import javax.annotation.Nullable;
 
@@ -30,11 +31,17 @@ public class PotBlock extends ContainerBlock {
 
     @Override
     public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (!worldIn.isRemote) {
-            INamedContainerProvider inamedcontainerprovider = this.getContainer(state, worldIn, pos);
-            if (inamedcontainerprovider != null) {
-                player.openContainer(inamedcontainerprovider);
-                // todo: open stats
+        PotTileEntity tile = (PotTileEntity) worldIn.getTileEntity(pos);
+        ItemStack stack = player.getHeldItem(handIn);
+        if (tile != null) {
+            if ((tile.isItemEmpty() && tile.getFluidHandler().getCapacity() > 0 && FluidUtil.getFluidContained(stack).isPresent()) || tile.getFluidHandler().getFluidAmount() > 0) {
+                return tile.activate(state, worldIn, pos, player, handIn, hit);
+            } else if (!worldIn.isRemote) {
+                INamedContainerProvider inamedcontainerprovider = this.getContainer(state, worldIn, pos);
+                if (inamedcontainerprovider != null) {
+                    player.openContainer(inamedcontainerprovider);
+                    // todo: open stats
+                }
             }
         }
         return true;
@@ -64,5 +71,25 @@ public class PotBlock extends ContainerBlock {
     @Override
     public TileEntity createNewTileEntity(IBlockReader worldIn) {
         return ModTileEntityType.POT.create();
+    }
+
+    public float getInnerRadius(int y) {
+        int modelStyle = getModelStyle();
+        if (modelStyle == 0) {
+            if (y >= 10) return 0.125f;
+            if (y >= 2) return 0.25f;
+        } else if (modelStyle == 1) {
+            if (y >= 12) return 0.125f;
+            if (y >= 6) return 0.25f;
+            if (y >= 3) return 0.1875f;
+            if (y >= 2) return 0.125f;
+        }
+        return 0f;
+    }
+
+    private int getModelStyle() {
+        if (this == ModBlocks.pot0 || this == ModBlocks.pot1 || this == ModBlocks.pot2 || this == ModBlocks.pot3 || this == ModBlocks.pot4 || this == ModBlocks.pot5 || this == ModBlocks.pot6 || this == ModBlocks.pot7) {
+            return 0;
+        } else return 1;
     }
 }
