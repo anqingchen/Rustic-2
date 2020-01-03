@@ -2,14 +2,22 @@ package com.samaritans.rustic2.block;
 
 import com.samaritans.rustic2.tileentity.ModTileEntityType;
 import com.samaritans.rustic2.tileentity.PotTileEntity;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ContainerBlock;
+import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.Fluids;
+import net.minecraft.fluid.IFluidState;
+import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -17,16 +25,50 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 import javax.annotation.Nullable;
 
-public class PotBlock extends ContainerBlock {
+public class PotBlock extends ContainerBlock implements IWaterLoggable {
     protected static final VoxelShape SHAPE = VoxelShapes.create(0.125D, 0.0D, 0.125D, 0.875D, 1D, 0.875D);
+
+    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
     public PotBlock(Properties builder) {
         super(builder);
+        setDefaultState(this.getStateContainer().getBaseState().with(WATERLOGGED, false));
+    }
+
+    @Override
+    public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
+        if (worldIn.getTileEntity(pos) instanceof PotTileEntity) {
+            PotTileEntity tileEntity = (PotTileEntity) worldIn.getTileEntity(pos);
+            if (!worldIn.isRemote) {
+                ItemStack toDrop = new ItemStack(state.getBlock());
+                CompoundNBT tag = new CompoundNBT();
+                if (!tileEntity.isFluidEmpty()) {
+                    tileEntity.getFluidHandler().writeToNBT(tag);
+                } else if (!tileEntity.isItemEmpty()) {
+                    if (!tileEntity.checkLootAndWrite(tag)) {
+                        ItemStackHelper.saveAllItems(tag, tileEntity.getPotContents(), false);
+                    }
+                }
+                if (!tag.isEmpty()) {
+                    toDrop.setTagInfo("BlockEntityTag", tag);
+                }
+                if (tileEntity.hasCustomName()) {
+                    toDrop.setDisplayName(tileEntity.getCustomName());
+                }
+                ItemEntity itementity = new ItemEntity(worldIn, (double)pos.getX(), (double)pos.getY(), (double)pos.getZ(), toDrop);
+                itementity.setDefaultPickupDelay();
+                worldIn.addEntity(itementity);
+            }
+        }
+        super.onBlockHarvested(worldIn, pos, state, player);
     }
 
     @Override
@@ -47,8 +89,35 @@ public class PotBlock extends ContainerBlock {
         return true;
     }
 
+    public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
+        if (stateIn.get(WATERLOGGED)) {
+            worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
+        }
+        return super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockItemUseContext context) {
+        IFluidState ifluidstate = context.getWorld().getFluidState(context.getPos());
+        return this.getDefaultState().with(WATERLOGGED, ifluidstate.getFluid() == Fluids.WATER);
+    }
+
+    @Override
+    public IFluidState getFluidState(BlockState state) {
+        return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
+    }
+
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+        if (worldIn.getTileEntity(pos) instanceof PotTileEntity) {
+            PotTileEntity tile = (PotTileEntity) worldIn.getTileEntity(pos);
+            if (stack.hasTag()) {
+                FluidTank tank = tile.getFluidHandler();
+                CompoundNBT nbt = (CompoundNBT) stack.getTag().get("BlockEntityTag");
+                tank.readFromNBT(nbt);
+                tile.markDirty();
+            }
+        }
         if (stack.hasDisplayName()) {
             TileEntity tileentity = worldIn.getTileEntity(pos);
             if (tileentity instanceof PotTileEntity) {
@@ -65,6 +134,12 @@ public class PotBlock extends ContainerBlock {
     @Override
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
+    }
+
+    @Override
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+        super.fillStateContainer(builder);
+        builder.add(WATERLOGGED);
     }
 
     @Nullable

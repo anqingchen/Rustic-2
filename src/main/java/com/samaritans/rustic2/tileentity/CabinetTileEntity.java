@@ -257,11 +257,6 @@ public class CabinetTileEntity extends LockableLootTileEntity implements ITickab
     }
 
     @Override
-    public boolean hasFastRenderer() {
-        return true;
-    }
-
-    @Override
     public AxisAlignedBB getRenderBoundingBox() {
         if (getTileEntity().getBlockState().get(CabinetBlock.TYPE) == CabinetBlock.CabinetType.BOTTOM) {
             return new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1D, pos.getY() + 2D, pos.getZ() + 1D);

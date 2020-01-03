@@ -230,7 +230,7 @@ public class CabinetBlock extends ContainerBlock {
     @Nullable
     private Direction getDirectionToAttach(BlockItemUseContext context, Direction direction) {
         BlockState blockstate = context.getWorld().getBlockState(context.getPos().offset(direction));
-        return blockstate.getBlock() == this && blockstate.get(TYPE) == CabinetType.SINGLE && blockstate.get(FACING) == context.getNearestLookingDirection().getOpposite() ? direction.getOpposite() : null;
+        return blockstate.getBlock() == this && blockstate.get(TYPE) == CabinetType.SINGLE && blockstate.get(FACING) == context.getPlacementHorizontalFacing().getOpposite() ? direction.getOpposite() : null;
     }
 
     @Nullable

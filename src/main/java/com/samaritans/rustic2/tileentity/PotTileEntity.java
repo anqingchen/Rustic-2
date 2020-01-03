@@ -88,6 +88,19 @@ public class PotTileEntity extends LockableLootTileEntity {
         return compound;
     }
 
+    public boolean checkLootAndWrite(CompoundNBT p_184282_1_) {
+        if (this.lootTable == null) {
+            return false;
+        } else {
+            p_184282_1_.putString("LootTable", this.lootTable.toString());
+            if (this.lootTableSeed != 0L) {
+                p_184282_1_.putLong("LootTableSeed", this.lootTableSeed);
+            }
+
+            return true;
+        }
+    }
+
     @Nullable
     @Override
     public SUpdateTileEntityPacket getUpdatePacket() {
@@ -149,6 +162,10 @@ public class PotTileEntity extends LockableLootTileEntity {
             }
         }
         return true;
+    }
+
+    public NonNullList<ItemStack> getPotContents() {
+        return potContents;
     }
 
     public boolean isFluidEmpty() {

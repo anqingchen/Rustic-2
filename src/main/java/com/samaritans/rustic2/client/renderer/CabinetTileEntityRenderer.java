@@ -12,6 +12,7 @@ import net.minecraft.block.ChestBlock;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
+import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.IChestLid;
 import net.minecraft.tileentity.TileEntity;
@@ -20,12 +21,12 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.animation.TileEntityRendererFast;
 
 // todo: possibly allow mirror, or render items inside cabinet?
-public class CabinetTileEntityRenderer<T extends TileEntity & IChestLid> extends TileEntityRendererFast<T> {
+public class CabinetTileEntityRenderer<T extends TileEntity & IChestLid> extends TileEntityRenderer<T> {
     protected static final ResourceLocation TEXTURE_NORMAL = new ResourceLocation("rustic:textures/model/cabinet.png");
     protected static final ResourceLocation TEXTURE_DOUBLE = new ResourceLocation("rustic:textures/model/cabinet_double.png");
     protected final CabinetModel simpleCabinet = new CabinetModel(false);
     //    protected final CabinetModel simpleCabinetM = new CabinetModel(true);
-    protected final TallCabinetModel tallCabinet = new TallCabinetModel(false);
+    protected final CabinetModel tallCabinet = new TallCabinetModel(false);
 //    protected final TallCabinetModel doubleCabinetM = new TallCabinetModel(true);
 
     @SuppressWarnings("ConstantConditions")
@@ -46,7 +47,7 @@ public class CabinetTileEntityRenderer<T extends TileEntity & IChestLid> extends
     }
 
     @Override
-    public void renderTileEntityFast(T tileEntityIn, double x, double y, double z, float partialTicks, int destroyStage, BufferBuilder buffer) {
+    public void render(T tileEntityIn, double x, double y, double z, float partialTicks, int destroyStage) {
         GlStateManager.enableDepthTest();
         GlStateManager.depthFunc(515);
         GlStateManager.depthMask(true);
@@ -68,9 +69,7 @@ public class CabinetTileEntityRenderer<T extends TileEntity & IChestLid> extends
             // boolean mirror = te.getWorld().getBlockState(te.getPos()).getValue(BlockCabinet.MIRROR);
 
             GlStateManager.pushMatrix();
-
             GlStateManager.enableRescaleNormal();
-
             int color = getColor(tileEntityIn.getBlockState().getBlock());
             float r = ((color >> 16) & 0xFF) / 255f;
             float g = ((color >> 8) & 0xFF) / 255f;
@@ -93,11 +92,8 @@ public class CabinetTileEntityRenderer<T extends TileEntity & IChestLid> extends
             modelcabinet.getDoor().rotateAngleY = (f * ((float) Math.PI / 2F));
             GlStateManager.translatef(0.5F, -0.5F, 0.5F);
 
-            GlStateManager.disableBlend();
             modelcabinet.renderAll();
             GlStateManager.disableRescaleNormal();
-            GlStateManager.enableBlend();
-
             GlStateManager.popMatrix();
             GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
             if (destroyStage >= 0) {

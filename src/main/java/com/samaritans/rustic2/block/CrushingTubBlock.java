@@ -8,6 +8,9 @@ import net.minecraft.block.ContainerBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Hand;
@@ -19,6 +22,8 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nullable;
 
@@ -45,6 +50,20 @@ public class CrushingTubBlock extends ContainerBlock {
             return ((CrushingTubTileEntity) tileEntity).activate(blockState, world, blockPos, player, hand, rayTraceResult);
         }
         return false;
+    }
+
+    @Override
+    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (state.getBlock() != newState.getBlock()) {
+            if (worldIn.getTileEntity(pos) instanceof CrushingTubTileEntity) {
+                CrushingTubTileEntity te = (CrushingTubTileEntity) worldIn.getTileEntity(pos);
+                ItemStackHandler handler = te.getItemHandler();
+                for (int i = 0; i < handler.getSlots(); i++) {
+                    InventoryHelper.spawnItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), handler.getStackInSlot(i));
+                }
+            }
+        }
+        super.onReplaced(state, worldIn, pos, newState, isMoving);
     }
 
     @Override
