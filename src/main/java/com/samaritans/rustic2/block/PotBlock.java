@@ -52,10 +52,6 @@ public class PotBlock extends ContainerBlock implements IWaterLoggable {
                 CompoundNBT tag = new CompoundNBT();
                 if (!tileEntity.isFluidEmpty()) {
                     tileEntity.getFluidHandler().writeToNBT(tag);
-                } else if (!tileEntity.isItemEmpty()) {
-                    if (!tileEntity.checkLootAndWrite(tag)) {
-                        ItemStackHelper.saveAllItems(tag, tileEntity.getPotContents(), false);
-                    }
                 }
                 if (!tag.isEmpty()) {
                     toDrop.setTagInfo("BlockEntityTag", tag);
@@ -63,7 +59,7 @@ public class PotBlock extends ContainerBlock implements IWaterLoggable {
                 if (tileEntity.hasCustomName()) {
                     toDrop.setDisplayName(tileEntity.getCustomName());
                 }
-                ItemEntity itementity = new ItemEntity(worldIn, (double)pos.getX(), (double)pos.getY(), (double)pos.getZ(), toDrop);
+                ItemEntity itementity = new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), toDrop);
                 itementity.setDefaultPickupDelay();
                 worldIn.addEntity(itementity);
             }

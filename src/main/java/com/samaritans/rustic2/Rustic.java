@@ -71,7 +71,7 @@ public class Rustic {
         ClientRegistry.bindTileEntitySpecialRenderer(CrushingTubTileEntity.class, new CrushingTubTileEntityRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(PotTileEntity.class, new PotTileEntityRenderer());
 
-        ModItemColors.register();
+        ModColorManager.register();
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event) {

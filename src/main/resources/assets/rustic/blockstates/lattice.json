@@ -1,0 +1,144 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "leaves": "true"
+      },
+      "apply": {
+        "model": "rustic:block/lattice_leaves"
+      }
+    },
+    {
+      "when": {
+        "leaves": "false"
+      },
+      "apply": {
+        "model": "rustic:block/lattice"
+      }
+    },
+    {
+      "when": {
+        "north": "true",
+        "leaves": "false"
+      },
+      "apply": {
+        "model": "rustic:block/lattice_side",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "east": "true",
+        "leaves": "false"
+      },
+      "apply": {
+        "model": "rustic:block/lattice_side",
+        "x": 270,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "south": "true",
+        "leaves": "false"
+      },
+      "apply": {
+        "model": "rustic:block/lattice_side",
+        "x": 270,
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "west": "true",
+        "leaves": "false"
+      },
+      "apply": {
+        "model": "rustic:block/lattice_side",
+        "x": 270,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "down": "true",
+        "leaves": "false"
+      },
+      "apply": {
+        "model": "rustic:block/lattice_side"
+      }
+    },
+    {
+      "when": {
+        "up": "true",
+        "leaves": "false"
+      },
+      "apply": {
+        "model": "rustic:block/lattice_side",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "north": "true",
+        "leaves": "true"
+      },
+      "apply": {
+        "model": "rustic:block/lattice_side_leaves",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "east": "true",
+        "leaves": "true"
+      },
+      "apply": {
+        "model": "rustic:block/lattice_side_leaves",
+        "x": 270,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "south": "true",
+        "leaves": "true"
+      },
+      "apply": {
+        "model": "rustic:block/lattice_side_leaves",
+        "x": 270,
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "west": "true",
+        "leaves": "true"
+      },
+      "apply": {
+        "model": "rustic:block/lattice_side_leaves",
+        "x": 270,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "down": "true",
+        "leaves": "true"
+      },
+      "apply": {
+        "model": "rustic:block/lattice_side_leaves"
+      }
+    },
+    {
+      "when": {
+        "up": "true",
+        "leaves": "true"
+      },
+      "apply": {
+        "model": "rustic:block/lattice_side_leaves",
+        "x": 180
+      }
+    }
+  ]
+}
