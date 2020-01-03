@@ -34,7 +34,7 @@ public class PotBlock extends ContainerBlock {
         PotTileEntity tile = (PotTileEntity) worldIn.getTileEntity(pos);
         ItemStack stack = player.getHeldItem(handIn);
         if (tile != null) {
-            if ((tile.isItemEmpty() && tile.getFluidHandler().getCapacity() > 0 && FluidUtil.getFluidContained(stack).isPresent()) || tile.getFluidHandler().getFluidAmount() > 0) {
+            if ((tile.isItemEmpty() && tile.getFluidHandler().getCapacity() > 0 && FluidUtil.getFluidContained(stack).isPresent() && !FluidUtil.getFluidContained(stack).orElseThrow(RuntimeException::new).isEmpty()) || tile.getFluidHandler().getFluidAmount() > 0) {
                 return tile.activate(state, worldIn, pos, player, handIn, hit);
             } else if (!worldIn.isRemote) {
                 INamedContainerProvider inamedcontainerprovider = this.getContainer(state, worldIn, pos);

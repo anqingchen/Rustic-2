@@ -21,6 +21,7 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.data.IModelData;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
@@ -31,6 +32,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class PotTileEntity extends LockableLootTileEntity {
@@ -126,10 +128,10 @@ public class PotTileEntity extends LockableLootTileEntity {
     @Override
     public <T> LazyOptional<T> getCapability(net.minecraftforge.common.capabilities.Capability<T> cap, Direction side) {
         if (!this.removed) {
-            if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+            if (isFluidEmpty() && cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
                 return this.potHandler.cast();
             }
-            else if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+            else if (isItemEmpty() && cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
                 return this.fluidHandler.cast();
             }
         }
@@ -147,6 +149,10 @@ public class PotTileEntity extends LockableLootTileEntity {
             }
         }
         return true;
+    }
+
+    public boolean isFluidEmpty() {
+        return getFluidHandler().getFluid().isEmpty();
     }
 
     private FluidTank createFluidHandler() {

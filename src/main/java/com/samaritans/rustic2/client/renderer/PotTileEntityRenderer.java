@@ -61,7 +61,6 @@ public class PotTileEntityRenderer extends TileEntityRenderer<PotTileEntity> {
             GlStateManager.disableBlend();
             GlStateManager.enableLighting();
             GlStateManager.enableCull();
-            GlStateManager.popAttributes();
         }
     }
 }
