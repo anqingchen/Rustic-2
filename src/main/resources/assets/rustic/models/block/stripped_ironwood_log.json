@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "rustic:block/stripped_ironwood_log_top",
+        "side": "rustic:block/stripped_ironwood_log"
+    }
+}

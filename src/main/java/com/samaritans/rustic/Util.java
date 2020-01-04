@@ -1,6 +1,8 @@
 package com.samaritans.rustic;
 
 import com.google.common.base.Preconditions;
+import net.minecraft.block.Blocks;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
@@ -11,6 +13,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.OptionalDouble;
 
 public class Util {
     /**
@@ -36,7 +42,7 @@ public class Util {
         return entry;
     }
 
-    protected static RayTraceResult rayTrace(World worldIn, PlayerEntity player, RayTraceContext.FluidMode fluidMode) {
+    public static RayTraceResult rayTrace(World worldIn, PlayerEntity player, RayTraceContext.FluidMode fluidMode) {
         float f = player.rotationPitch;
         float f1 = player.rotationYaw;
         Vec3d vec3d = player.getEyePosition(1.0F);
@@ -50,4 +56,36 @@ public class Util {
         Vec3d vec3d1 = vec3d.add((double)f6 * d0, (double)f5 * d0, (double)f7 * d0);
         return worldIn.rayTraceBlocks(new RayTraceContext(vec3d, vec3d1, RayTraceContext.BlockMode.OUTLINE, fluidMode, player));
     }
+
+//    public static int calculateColor(@Nullable TextureAtlasSprite sprite) {
+//        if (sprite == null) return 0xFFFF00FF;
+//        int numPixels = 0;
+//        int width = sprite.getWidth();
+//        int height = sprite.getHeight();
+//
+//        int a = 0xFF;
+//        int r = 0;
+//        int g = 0;
+//        int b = 0;
+//
+//        for (int y = 0; y < height; y++) {
+//            for (int x = 0; x < width; x++) {
+//                int c = sprite.getPixelRGBA(0, x, y);
+//                if (((c >> 24) & 0xFF) <= 0) continue;
+//
+//                r += (c >> 16) & 0xFF;
+//                g += (c >> 8) & 0xFF;
+//                b += (c) & 0xFF;
+//
+//                numPixels++;
+//            }
+//        }
+//
+//        r = MathHelper.clamp(Math.round(((float) r / (float) numPixels)), 0, 255);
+//        g = MathHelper.clamp(Math.round(((float) g / (float) numPixels)), 0, 255);
+//        b = MathHelper.clamp(Math.round(((float) b / (float) numPixels)), 0, 255);
+//
+//        int color = (a << 24) | (r << 16) | (g << 8) | (b);
+//        return color;
+//    }
 }

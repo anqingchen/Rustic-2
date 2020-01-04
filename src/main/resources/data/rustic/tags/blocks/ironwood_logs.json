@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "rustic:ironwood_log",
+    "rustic:ironwood_wood",
+    "rustic:stripped_ironwood_log",
+    "rustic:stripped_ironwood_wood"
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "block/leaves",
+  "textures": {
+    "all": "rustic:block/ironwood_leaves"
+  }
+}

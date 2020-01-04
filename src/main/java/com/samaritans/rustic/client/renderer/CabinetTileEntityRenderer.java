@@ -2,6 +2,7 @@ package com.samaritans.rustic.client.renderer;
 
 import com.mojang.blaze3d.platform.GLX;
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.samaritans.rustic.Util;
 import com.samaritans.rustic.block.CabinetBlock;
 import com.samaritans.rustic.block.ModBlocks;
 import com.samaritans.rustic.client.renderer.model.CabinetModel;
@@ -11,6 +12,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ChestBlock;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.model.IBakedModel;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.item.ItemStack;
@@ -30,7 +33,9 @@ public class CabinetTileEntityRenderer<T extends TileEntity & IChestLid> extends
 
     @SuppressWarnings("ConstantConditions")
     public static int getColor(Block block) {
-        if (block == ModBlocks.acacia_cabinet) {
+        if (block == ModBlocks.ironwood_cabinet) {
+            return 0x9a8064;
+        } else if (block == ModBlocks.acacia_cabinet) {
             return 12215095;
         } else if (block == ModBlocks.birch_cabinet) {
             return 14139781;

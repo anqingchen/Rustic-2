@@ -1,21 +1,25 @@
 package com.samaritans.rustic;
 
+import com.google.common.collect.ImmutableMap;
+import com.samaritans.rustic.block.ModBlocks;
 import com.samaritans.rustic.item.FluidBottleItem;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FlowingFluidBlock;
+import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -23,7 +27,36 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
+import java.util.Map;
+
 public class ModEventHandler {
+    @SuppressWarnings("ConstantConditions")
+    @SubscribeEvent
+    public static void onAxeStrip(PlayerInteractEvent.RightClickBlock event) {
+        final Map<Block, Block> MOD_BLOCK_STRIPPING_MAP = (new ImmutableMap.Builder<Block, Block>()).put(ModBlocks.ironwood_log, ModBlocks.stripped_ironwood_log).put(ModBlocks.ironwood_wood, ModBlocks.stripped_ironwood_wood).build();
+        if (event.getItemStack().getItem() instanceof AxeItem) {
+            BlockPos blockpos = event.getPos();
+            World world = event.getWorld();
+            BlockState blockstate = world.getBlockState(blockpos);
+            Block block = blockstate.getBlock();
+            Block stripped_block = MOD_BLOCK_STRIPPING_MAP.get(block);
+            if (stripped_block != null) {
+                PlayerEntity playerentity = event.getPlayer();
+                world.playSound(playerentity, blockpos, SoundEvents.ITEM_AXE_STRIP, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                if (!world.isRemote) {
+                    world.setBlockState(blockpos, stripped_block.getDefaultState().with(RotatedPillarBlock.AXIS, blockstate.get(RotatedPillarBlock.AXIS)), 11);
+                    if (playerentity != null) {
+                        event.getItemStack().damageItem(1, playerentity, (p_220040_1_) -> {
+                            p_220040_1_.sendBreakAnimation(event.getHand());
+                        });
+                    }
+                }
+                event.setCancellationResult(ActionResultType.SUCCESS);
+                event.setCanceled(true);
+            }
+        }
+    }
+
     @SubscribeEvent
     public static void onPlayerUseGlassBottle(PlayerInteractEvent.RightClickBlock event) {
         if (event.getItemStack().getItem().equals(Items.GLASS_BOTTLE)) {

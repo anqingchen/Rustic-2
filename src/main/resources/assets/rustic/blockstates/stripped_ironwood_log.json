@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "axis=y":  { "model": "rustic:block/stripped_ironwood_log" },
+    "axis=z":   { "model": "rustic:block/stripped_ironwood_log", "x": 90 },
+    "axis=x":   { "model": "rustic:block/stripped_ironwood_log", "x": 90, "y": 90 }
+  }
+}
