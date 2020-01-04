@@ -8,6 +8,7 @@ import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItemUseContext;
@@ -48,20 +49,24 @@ public class PotBlock extends ContainerBlock implements IWaterLoggable {
         if (worldIn.getTileEntity(pos) instanceof PotTileEntity) {
             PotTileEntity tileEntity = (PotTileEntity) worldIn.getTileEntity(pos);
             if (!worldIn.isRemote) {
-                ItemStack toDrop = new ItemStack(state.getBlock());
-                CompoundNBT tag = new CompoundNBT();
                 if (!tileEntity.isFluidEmpty()) {
-                    tileEntity.getFluidHandler().writeToNBT(tag);
+                    ItemStack toDrop = new ItemStack(state.getBlock());
+                    CompoundNBT tag = new CompoundNBT();
+                    if (!tileEntity.isFluidEmpty()) {
+                        tileEntity.getFluidHandler().writeToNBT(tag);
+                    }
+                    if (!tag.isEmpty()) {
+                        toDrop.setTagInfo("BlockEntityTag", tag);
+                    }
+                    if (tileEntity.hasCustomName()) {
+                        toDrop.setDisplayName(tileEntity.getCustomName());
+                    }
+                    ItemEntity itementity = new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), toDrop);
+                    itementity.setDefaultPickupDelay();
+                    worldIn.addEntity(itementity);
+                } else {
+                    InventoryHelper.dropItems(worldIn, pos, tileEntity.getPotContents());
                 }
-                if (!tag.isEmpty()) {
-                    toDrop.setTagInfo("BlockEntityTag", tag);
-                }
-                if (tileEntity.hasCustomName()) {
-                    toDrop.setDisplayName(tileEntity.getCustomName());
-                }
-                ItemEntity itementity = new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), toDrop);
-                itementity.setDefaultPickupDelay();
-                worldIn.addEntity(itementity);
             }
         }
         super.onBlockHarvested(worldIn, pos, state, player);

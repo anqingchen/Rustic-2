@@ -83,7 +83,6 @@ public class WallCandleBlock extends CandleBlock {
                 }
             }
         }
-
         return null;
     }
 

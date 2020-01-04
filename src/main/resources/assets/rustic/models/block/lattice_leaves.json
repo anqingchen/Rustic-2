@@ -2,7 +2,8 @@
 	"credit": "Made with Blockbench",
 	"textures": {
 		"lattice": "rustic:block/lattice",
-		"leaves": "block/oak_leaves"
+		"leaves": "block/oak_leaves",
+		"particle": "rustic:block/lattice"
 	},
 	"elements": [
 		{
