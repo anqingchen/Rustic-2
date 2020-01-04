@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "end": "rustic:block/slate_tile",
+    "side": "rustic:block/slate_pillar"
+  }
+}
