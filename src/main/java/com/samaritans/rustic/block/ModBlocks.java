@@ -17,6 +17,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Mod.EventBusSubscriber(modid = Rustic.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 @ObjectHolder(Rustic.MODID)
 public class ModBlocks {
@@ -229,5 +232,11 @@ public class ModBlocks {
             final BlockItem blockItem = new BlockItem(block, new Item.Properties().setTEISR(() -> CabinetTileEntityRenderer.TEISR::new).group(Rustic.TAB));
             registry.register(Util.setup(blockItem, block.getRegistryName()));
         });
+
+        // Adding ironwood to Axe Stripping, might need to move this somewhere better
+        Map<Block, Block> map = new HashMap<>(AxeItem.BLOCK_STRIPPING_MAP);
+        map.put(ModBlocks.IRONWOOD_LOG, ModBlocks.STRIPPED_IRONWOOD_LOG);
+        map.put(ModBlocks.IRONWOOD_WOOD, ModBlocks.STRIPPED_IRONWOOD_WOOD);
+        AxeItem.BLOCK_STRIPPING_MAP = map;
     }
 }

@@ -14,8 +14,8 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
 version = '0.0.1'
-group = 'com.samaritans.rustic2' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'rustic2'
+group = 'com.samaritans.rustic' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = 'rustic'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
@@ -28,7 +28,7 @@ minecraft {
     mappings channel: 'snapshot', version: '20191225-1.14.3'
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
     
-    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     // Default run configurations.
     // These can be tweaked, removed, or duplicated as needed.
@@ -89,7 +89,7 @@ dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft 'net.minecraftforge:forge:1.14.4-28.1.109'
+    minecraft 'net.minecraftforge:forge:1.14.4-28.1.111'
 
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"
@@ -115,13 +115,13 @@ dependencies {
 jar {
     manifest {
         attributes([
-            "Specification-Title": "rustic2",
-            "Specification-Vendor": "rustic2sareus",
+            "Specification-Title": "rustic",
+            "Specification-Vendor": "rusticsareus",
             "Specification-Version": "1", // We are version 1 of ourselves
             "Implementation-Title": project.name,
             "Implementation-Version": "${version}",
-            "Implementation-Vendor" :"rustic2sareus",
-            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+            "Implementation-Vendor" :"rusticsareus",
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
         ])
     }
 }
