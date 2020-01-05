@@ -2,7 +2,6 @@ package com.samaritans.rustic.client.renderer;
 
 import com.mojang.blaze3d.platform.GLX;
 import com.mojang.blaze3d.platform.GlStateManager;
-import com.samaritans.rustic.Util;
 import com.samaritans.rustic.block.CabinetBlock;
 import com.samaritans.rustic.block.ModBlocks;
 import com.samaritans.rustic.client.renderer.model.CabinetModel;
@@ -12,8 +11,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ChestBlock;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.item.ItemStack;
@@ -33,17 +30,17 @@ public class CabinetTileEntityRenderer<T extends TileEntity & IChestLid> extends
 
     @SuppressWarnings("ConstantConditions")
     public static int getColor(Block block) {
-        if (block == ModBlocks.ironwood_cabinet) {
+        if (block == ModBlocks.IRONWOOD_CABINET) {
             return 0x9a8064;
-        } else if (block == ModBlocks.acacia_cabinet) {
+        } else if (block == ModBlocks.ACACIA_CABINET) {
             return 12215095;
-        } else if (block == ModBlocks.birch_cabinet) {
+        } else if (block == ModBlocks.BIRCH_CABINET) {
             return 14139781;
-        } else if (block == ModBlocks.dark_oak_cabinet) {
+        } else if (block == ModBlocks.DARK_OAK_CABINET) {
             return 5190168;
-        } else if (block == ModBlocks.jungle_cabinet) {
+        } else if (block == ModBlocks.JUNGLE_CABINET) {
             return 12093284;
-        } else if (block == ModBlocks.oak_cabinet) {
+        } else if (block == ModBlocks.OAK_CABINET) {
             return 12096607;
         } else {
             return 8544570;

@@ -19,9 +19,9 @@ public class ModTileEntityType {
     @SubscribeEvent
     public static void onRegisterBlockItems(RegistryEvent.Register<TileEntityType<?>> event) {
         event.getRegistry().registerAll(
-                Util.setup(TileEntityType.Builder.create(CabinetTileEntity::new, ModBlocks.acacia_cabinet, ModBlocks.birch_cabinet, ModBlocks.dark_oak_cabinet, ModBlocks.jungle_cabinet, ModBlocks.oak_cabinet, ModBlocks.spruce_cabinet, ModBlocks.ironwood_cabinet).build(null), "cabinet"),
-                Util.setup(TileEntityType.Builder.create(PotTileEntity::new, ModBlocks.pot0, ModBlocks.pot1, ModBlocks.pot2, ModBlocks.pot3, ModBlocks.pot4, ModBlocks.pot5, ModBlocks.pot6, ModBlocks.pot7, ModBlocks.pot8, ModBlocks.pot9, ModBlocks.pot10, ModBlocks.pot11).build(null), "pot"),
-                Util.setup(TileEntityType.Builder.create(CrushingTubTileEntity::new, ModBlocks.crushing_tub).build(null), "crushing_tub")
+                Util.setup(TileEntityType.Builder.create(CabinetTileEntity::new, ModBlocks.ACACIA_CABINET, ModBlocks.BIRCH_CABINET, ModBlocks.DARK_OAK_CABINET, ModBlocks.JUNGLE_CABINET, ModBlocks.OAK_CABINET, ModBlocks.SPRUCE_CABINET, ModBlocks.IRONWOOD_CABINET).build(null), "cabinet"),
+                Util.setup(TileEntityType.Builder.create(PotTileEntity::new, ModBlocks.POT_0, ModBlocks.POT_1, ModBlocks.POT_2, ModBlocks.POT_3, ModBlocks.POT_4, ModBlocks.POT_5, ModBlocks.POT_6, ModBlocks.POT_7, ModBlocks.POT_8, ModBlocks.POT_9, ModBlocks.POT_10, ModBlocks.POT_11).build(null), "pot"),
+                Util.setup(TileEntityType.Builder.create(CrushingTubTileEntity::new, ModBlocks.CRUSHING_TUB).build(null), "crushing_tub")
         );
     }
 }

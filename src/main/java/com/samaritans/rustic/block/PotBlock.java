@@ -162,7 +162,7 @@ public class PotBlock extends ContainerBlock implements IWaterLoggable {
     }
 
     private int getModelStyle() {
-        if (this == ModBlocks.pot0 || this == ModBlocks.pot1 || this == ModBlocks.pot2 || this == ModBlocks.pot3 || this == ModBlocks.pot4 || this == ModBlocks.pot5 || this == ModBlocks.pot6 || this == ModBlocks.pot7) {
+        if (this == ModBlocks.POT_0 || this == ModBlocks.POT_1 || this == ModBlocks.POT_2 || this == ModBlocks.POT_3 || this == ModBlocks.POT_4 || this == ModBlocks.POT_5 || this == ModBlocks.POT_6 || this == ModBlocks.POT_7) {
             return 0;
         } else return 1;
     }

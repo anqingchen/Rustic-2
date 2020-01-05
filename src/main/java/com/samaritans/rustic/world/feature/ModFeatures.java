@@ -17,7 +17,7 @@ public class ModFeatures {
     @SubscribeEvent
     public static void onRegisterFeatures(final RegistryEvent.Register<Feature<?>> event) {
         event.getRegistry().registerAll(
-                Util.setup(new IronwoodTree(NoFeatureConfig::deserialize, true), "ironwood_tree")
+                Util.setup(new IronwoodTreeFeature(NoFeatureConfig::deserialize, true), "ironwood_tree")
         );
     }
 }

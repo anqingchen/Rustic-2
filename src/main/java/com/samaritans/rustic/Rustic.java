@@ -10,6 +10,7 @@ import com.samaritans.rustic.network.PacketHandler;
 import com.samaritans.rustic.tileentity.CabinetTileEntity;
 import com.samaritans.rustic.tileentity.CrushingTubTileEntity;
 import com.samaritans.rustic.tileentity.PotTileEntity;
+import com.samaritans.rustic.world.ModWorldGen;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -34,7 +35,7 @@ public class Rustic {
     public static final ItemGroup TAB = new ItemGroup(MODID) {
         @Override
         public ItemStack createIcon() {
-            return new ItemStack(ModBlocks.slate);
+            return new ItemStack(ModBlocks.SLATE);
         }
     };
     // Directly reference a log4j logger.
@@ -63,6 +64,8 @@ public class Rustic {
     private void setup(final FMLCommonSetupEvent event) {
         // some preinit code
         PacketHandler.registerMessages();
+
+        ModWorldGen.setupTreeGen();
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {

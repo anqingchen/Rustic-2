@@ -3,7 +3,6 @@ package com.samaritans.rustic.world.feature;
 import com.mojang.datafixers.Dynamic;
 import com.samaritans.rustic.block.ModBlocks;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.world.gen.IWorldGenerationReader;
@@ -14,11 +13,11 @@ import java.util.Random;
 import java.util.Set;
 import java.util.function.Function;
 
-public class IronwoodTree extends AbstractTreeFeature<NoFeatureConfig> {
-    private static final BlockState LOG = ModBlocks.ironwood_log.getDefaultState();
-    private static final BlockState LEAF = ModBlocks.ironwood_leaves.getDefaultState();
+public class IronwoodTreeFeature extends AbstractTreeFeature<NoFeatureConfig> {
+    private static final BlockState LOG = ModBlocks.IRONWOOD_LOG.getDefaultState();
+    private static final BlockState LEAF = ModBlocks.IRONWOOD_LEAVES.getDefaultState();
 
-    public IronwoodTree(Function<Dynamic<?>, ? extends NoFeatureConfig> p_i49920_1_, boolean p_i49920_2_) {
+    public IronwoodTreeFeature(Function<Dynamic<?>, ? extends NoFeatureConfig> p_i49920_1_, boolean p_i49920_2_) {
         super(p_i49920_1_, p_i49920_2_);
     }
 
@@ -35,11 +34,11 @@ public class IronwoodTree extends AbstractTreeFeature<NoFeatureConfig> {
                 if (j >= position.getY() + 1 + i - 2) {
                     k = 2;
                 }
-                BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
+                BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
                 for(int l = position.getX() - k; l <= position.getX() + k && flag; ++l) {
                     for(int i1 = position.getZ() - k; i1 <= position.getZ() + k && flag; ++i1) {
                         if (j >= 0 && j < worldIn.getMaxHeight()) {
-                            if (!func_214587_a(worldIn, blockpos$mutableblockpos.setPos(l, j, i1))) {
+                            if (!func_214587_a(worldIn, mutableBlockPos.setPos(l, j, i1))) {
                                 flag = false;
                             }
                         } else {

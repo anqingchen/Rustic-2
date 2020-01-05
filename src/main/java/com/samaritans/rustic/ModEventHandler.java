@@ -19,7 +19,6 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -33,7 +32,7 @@ public class ModEventHandler {
     @SuppressWarnings("ConstantConditions")
     @SubscribeEvent
     public static void onAxeStrip(PlayerInteractEvent.RightClickBlock event) {
-        final Map<Block, Block> MOD_BLOCK_STRIPPING_MAP = (new ImmutableMap.Builder<Block, Block>()).put(ModBlocks.ironwood_log, ModBlocks.stripped_ironwood_log).put(ModBlocks.ironwood_wood, ModBlocks.stripped_ironwood_wood).build();
+        final Map<Block, Block> MOD_BLOCK_STRIPPING_MAP = (new ImmutableMap.Builder<Block, Block>()).put(ModBlocks.IRONWOOD_LOG, ModBlocks.STRIPPED_IRONWOOD_LOG).put(ModBlocks.IRONWOOD_WOOD, ModBlocks.STRIPPED_IRONWOOD_WOOD).build();
         if (event.getItemStack().getItem() instanceof AxeItem) {
             BlockPos blockpos = event.getPos();
             World world = event.getWorld();

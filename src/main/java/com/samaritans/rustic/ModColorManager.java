@@ -21,6 +21,6 @@ public class ModColorManager {
 
     private static void registerBlockColors() {
         minecraft.getBlockColors().register(((blockState, iEnviromentBlockReader, blockPos, i) ->
-                blockPos != null && iEnviromentBlockReader != null && i == 0 ? BiomeColors.getFoliageColor(iEnviromentBlockReader, blockPos) : FoliageColors.getDefault()), ModBlocks.lattice);
+                blockPos != null && iEnviromentBlockReader != null && i == 0 ? BiomeColors.getFoliageColor(iEnviromentBlockReader, blockPos) : FoliageColors.getDefault()), ModBlocks.LATTICE);
     }
 }
