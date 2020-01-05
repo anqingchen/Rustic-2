@@ -161,8 +161,9 @@ public class PotBlock extends ContainerBlock implements IWaterLoggable {
         return 0f;
     }
 
+    @SuppressWarnings("ConstantConditions")
     private int getModelStyle() {
-        if (this == ModBlocks.POT_0 || this == ModBlocks.POT_1 || this == ModBlocks.POT_2 || this == ModBlocks.POT_3 || this == ModBlocks.POT_4 || this == ModBlocks.POT_5 || this == ModBlocks.POT_6 || this == ModBlocks.POT_7) {
+        if (this == ModBlocks.POT0 || this == ModBlocks.POT1 || this == ModBlocks.POT2 || this == ModBlocks.POT3 || this == ModBlocks.POT4 || this == ModBlocks.POT5 || this == ModBlocks.POT6 || this == ModBlocks.POT7) {
             return 0;
         } else return 1;
     }

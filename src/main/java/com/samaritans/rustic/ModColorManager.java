@@ -16,7 +16,7 @@ public class ModColorManager {
     }
 
     private static void registerItemColors() {
-        minecraft.getItemColors().register(new FluidContainerColorer(), ModItems.FLUID_BOTTLE.get());
+        minecraft.getItemColors().register(new FluidContainerColorer(), ModItems.FLUID_BOTTLE);
     }
 
     private static void registerBlockColors() {

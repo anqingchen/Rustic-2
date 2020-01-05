@@ -109,7 +109,7 @@ public class FluidBottleItem extends ItemFluidContainer {
     }
 
     public static ItemStack getFluidBottle(Fluid fluid) {
-        ItemStack bottlestack = new ItemStack(ModItems.FLUID_BOTTLE.get(), 1);
+        ItemStack bottlestack = new ItemStack(ModItems.FLUID_BOTTLE, 1);
         CompoundNBT fluidTag = new FluidStack(fluid, 1000).writeToNBT(new CompoundNBT());
         CompoundNBT tag = new CompoundNBT();
         tag.put(FluidBottleItem.FLUID_NBT_KEY, fluidTag);
