@@ -15,8 +15,6 @@ import net.minecraftforge.registries.ObjectHolder;
 @Mod.EventBusSubscriber(modid = Rustic.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 @ObjectHolder(Rustic.MODID)
 public class ModItems {
-    public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, Rustic.MODID);
-
     public static final Item FLUID_BOTTLE = null;
     public static final Item GRAPES = null;
 

@@ -52,8 +52,6 @@ public class Rustic {
         // Register the doClientStuff method for modloading
         modEventBus.addListener(this::doClientStuff);
 
-        ModItems.ITEMS.register(modEventBus);
-
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(ModEventHandler.class);
