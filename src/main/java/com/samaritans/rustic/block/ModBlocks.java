@@ -8,7 +8,10 @@ import com.samaritans.rustic.client.renderer.CabinetTileEntityRenderer;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
-import net.minecraft.item.*;
+import net.minecraft.item.AxeItem;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.WallOrFloorItem;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -69,6 +72,22 @@ public class ModBlocks {
     public static final Block IRONWOOD_DOOR = null;
 //    public static final Block ironwood_sign = null;
 //    public static final Block ironwood_wall_sign = null;
+
+    public static final Block YEW_SAPLING = null;
+    public static final Block YEW_LOG = null;
+    public static final Block STRIPPED_YEW_LOG = null;
+    public static final Block YEW_WOOD = null;
+    public static final Block STRIPPED_YEW_WOOD = null;
+    public static final Block YEW_PLANKS = null;
+    public static final Block YEW_SLAB = null;
+    public static final Block YEW_STAIRS = null;
+    public static final Block YEW_BUTTON = null;
+    public static final Block YEW_PRESSURE_PLATE = null;
+    public static final Block YEW_LEAVES = null;
+    public static final Block YEW_FENCE = null;
+    public static final Block YEW_FENCE_GATE = null;
+    public static final Block YEW_TRAPDOOR = null;
+    public static final Block YEW_DOOR = null;
 
     public static final Block ACACIA_TABLE = null;
     public static final Block BIRCH_TABLE = null;
@@ -161,6 +180,22 @@ public class ModBlocks {
                 Util.setup(new ModDoorBlock(PLANKS_PROPERTIES), "ironwood_door"),
 //                Util.setup(new StandingSignBlock(Block.Properties.create(Material.WOOD).doesNotBlockMovement().hardnessAndResistance(1.0F).sound(SoundType.WOOD)), "ironwood_sign"),
 //                Util.setup(new WallSignBlock(Block.Properties.create(Material.WOOD).doesNotBlockMovement().hardnessAndResistance(1.0F).sound(SoundType.WOOD)), "ironwood_wall_sign"),
+
+                Util.setup(new ModSaplingBlock(new IronwoodTree(), Block.Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().hardnessAndResistance(0).sound(SoundType.PLANT)), "yew_sapling"),
+                Util.setup(new LogBlock(MaterialColor.IRON, LOG_PROPERTIES), "yew_log"),
+                Util.setup(new LogBlock(MaterialColor.IRON, LOG_PROPERTIES), "stripped_yew_log"),
+                Util.setup(new RotatedPillarBlock(LOG_PROPERTIES), "yew_wood"),
+                Util.setup(new RotatedPillarBlock(LOG_PROPERTIES), "stripped_yew_wood"),
+                Util.setup(new Block(PLANKS_PROPERTIES), "yew_planks"),
+                Util.setup(new SlabBlock(PLANKS_PROPERTIES), "yew_slab"),
+                Util.setup(new StairsBlock(() -> ModBlocks.IRONWOOD_PLANKS.getDefaultState(), PLANKS_PROPERTIES), "yew_stairs"),
+                Util.setup(new ModWoodButtonBlock(Block.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.5F).sound(SoundType.WOOD)), "yew_button"),
+                Util.setup(new ModPressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, Block.Properties.create(Material.WOOD).doesNotBlockMovement().hardnessAndResistance(0.5F).sound(SoundType.WOOD)), "yew_pressure_plate"),
+                Util.setup(new LeavesBlock(Block.Properties.create(Material.LEAVES).hardnessAndResistance(0.2F).tickRandomly().sound(SoundType.PLANT)), "yew_leaves"),
+                Util.setup(new FenceBlock(PLANKS_PROPERTIES), "yew_fence"),
+                Util.setup(new FenceGateBlock(PLANKS_PROPERTIES), "yew_fence_gate"),
+                Util.setup(new ModTrapDoorBlock(PLANKS_PROPERTIES), "yew_trapdoor"),
+                Util.setup(new ModDoorBlock(PLANKS_PROPERTIES), "yew_door"),
 
                 // todo: eventually add rustic woods to this list
                 // Tables

@@ -1,8 +1,6 @@
 package com.samaritans.rustic;
 
 import com.google.common.base.Preconditions;
-import net.minecraft.block.Blocks;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
@@ -13,10 +11,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.OptionalDouble;
 
 public class Util {
     /**

@@ -5,7 +5,6 @@ import com.samaritans.rustic.client.renderer.CabinetTileEntityRenderer;
 import com.samaritans.rustic.client.renderer.CrushingTubTileEntityRenderer;
 import com.samaritans.rustic.client.renderer.PotTileEntityRenderer;
 import com.samaritans.rustic.crafting.SyncHandler;
-import com.samaritans.rustic.item.ModItems;
 import com.samaritans.rustic.network.PacketHandler;
 import com.samaritans.rustic.tileentity.CabinetTileEntity;
 import com.samaritans.rustic.tileentity.CrushingTubTileEntity;
@@ -35,7 +34,7 @@ public class Rustic {
     public static final ItemGroup TAB = new ItemGroup(MODID) {
         @Override
         public ItemStack createIcon() {
-            return new ItemStack(ModBlocks.SLATE);
+            return new ItemStack(ModBlocks.POT10);
         }
     };
     // Directly reference a log4j logger.
@@ -63,7 +62,7 @@ public class Rustic {
         // some preinit code
         PacketHandler.registerMessages();
 
-        ModWorldGen.setupTreeGen();
+        ModWorldGen.setup();
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
@@ -72,6 +71,7 @@ public class Rustic {
         ClientRegistry.bindTileEntitySpecialRenderer(CrushingTubTileEntity.class, new CrushingTubTileEntityRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(PotTileEntity.class, new PotTileEntityRenderer());
 
+        // todo: move this to a correct event
         ModColorManager.register();
     }
 
