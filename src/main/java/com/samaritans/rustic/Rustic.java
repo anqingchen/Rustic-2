@@ -12,6 +12,8 @@ import com.samaritans.rustic.tileentity.PotTileEntity;
 import com.samaritans.rustic.world.ModWorldGen;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -24,6 +26,8 @@ import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLEnvironment;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -41,6 +45,7 @@ public class Rustic {
     private static final Logger LOGGER = LogManager.getLogger();
 
     public Rustic() {
+    	//proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> ServerProxy::new);
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         // Register the setup method for modloading
         modEventBus.addListener(this::setup);
@@ -49,7 +54,8 @@ public class Rustic {
         // Register the processIMC method for modloading
         modEventBus.addListener(this::processIMC);
         // Register the doClientStuff method for modloading
-        modEventBus.addListener(this::doClientStuff);
+        if (FMLEnvironment.dist.isClient()) // TODO: move into client proxy
+        	modEventBus.addListener(this::doClientStuff);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
@@ -64,7 +70,8 @@ public class Rustic {
 
         ModWorldGen.setup();
     }
-
+    
+    @OnlyIn(Dist.CLIENT)
     private void doClientStuff(final FMLClientSetupEvent event) {
         // do something that can only be done on the client
         ClientRegistry.bindTileEntitySpecialRenderer(CabinetTileEntity.class, new CabinetTileEntityRenderer<>());

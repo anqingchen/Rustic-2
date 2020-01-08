@@ -1,7 +1,10 @@
 package com.samaritans.rustic.client.renderer.model;
 
 import net.minecraft.client.renderer.entity.model.RendererModel;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class TallCabinetModel extends CabinetModel {
 
     public TallCabinetModel(boolean mirror) {
