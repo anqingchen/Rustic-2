@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "rustic:ironwood_pressure_plate"
+    "rustic:ironwood_pressure_plate",
+    "rustic:yew_fence"
   ]
 }

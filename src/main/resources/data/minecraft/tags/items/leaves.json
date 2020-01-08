@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "rustic:ironwood_leaves"
+    "rustic:ironwood_leaves",
+    "rustic:yew_leaves"
   ]
 }

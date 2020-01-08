@@ -13,11 +13,13 @@ import net.minecraftforge.registries.ObjectHolder;
 @ObjectHolder(Rustic.MODID)
 public class ModFeatures {
     public static final Feature<NoFeatureConfig> IRONWOOD_TREE = null;
+    public static final Feature<NoFeatureConfig> YEW_TREE = null;
 
     @SubscribeEvent
     public static void onRegisterFeatures(final RegistryEvent.Register<Feature<?>> event) {
         event.getRegistry().registerAll(
-                Util.setup(new IronwoodTreeFeature(NoFeatureConfig::deserialize, true), "ironwood_tree")
+                Util.setup(new IronwoodTreeFeature(NoFeatureConfig::deserialize, true), "ironwood_tree"),
+                Util.setup(new YewTreeFeature(NoFeatureConfig::deserialize, true), "yew_tree")
         );
     }
 }

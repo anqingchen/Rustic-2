@@ -8,6 +8,7 @@ import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.world.gen.IWorldGenerationReader;
 import net.minecraft.world.gen.feature.AbstractTreeFeature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraftforge.common.IPlantable;
 
 import java.util.Random;
 import java.util.Set;
@@ -19,6 +20,7 @@ public class IronwoodTreeFeature extends AbstractTreeFeature<NoFeatureConfig> {
 
     public IronwoodTreeFeature(Function<Dynamic<?>, ? extends NoFeatureConfig> p_i49920_1_, boolean p_i49920_2_) {
         super(p_i49920_1_, p_i49920_2_);
+        this.setSapling((IPlantable) ModBlocks.IRONWOOD_SAPLING);
     }
 
     @Override

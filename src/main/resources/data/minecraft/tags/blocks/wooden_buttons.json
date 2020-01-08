@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "rustic:ironwood_button"
+    "rustic:ironwood_button",
+    "rustic:yew_button"
   ]
 }

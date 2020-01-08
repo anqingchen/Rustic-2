@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "rustic:ironwood_planks"
+    "rustic:ironwood_planks",
+    "rustic:yew_planks"
   ]
 }
