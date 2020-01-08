@@ -26,7 +26,7 @@ public class YewTreeFeature extends AbstractTreeFeature<NoFeatureConfig> {
 
     @Override
     public boolean place(Set<BlockPos> changedBlocks, IWorldGenerationReader worldIn, Random rand, BlockPos position, MutableBoundingBox boundsIn) {
-        int height = rand.nextInt(4) + 5;
+        int height = rand.nextInt(3) + 4;
         int j = position.getX();
         int k = position.getY();
         int l = position.getZ();
@@ -71,17 +71,27 @@ public class YewTreeFeature extends AbstractTreeFeature<NoFeatureConfig> {
 
                     this.placeLeaves(worldIn, blockpos1.north(2), boundsIn, changedBlocks);
                     this.placeLeaves(worldIn, blockpos1.north(2).east(), boundsIn, changedBlocks);
+                    this.placeLeaves(worldIn, blockpos1.north(2).east(2), boundsIn, changedBlocks);
+                    this.placeLeaves(worldIn, blockpos1.north(2).west(), boundsIn, changedBlocks);
+                    this.placeLeaves(worldIn, blockpos1.west(2).north(), boundsIn, changedBlocks);
                     this.placeLeaves(worldIn, blockpos1.west(2), boundsIn, changedBlocks);
-                    this.placeLeaves(worldIn, blockpos1.west().south(), boundsIn, changedBlocks);
-                    this.placeLeaves(worldIn, blockpos1.west().south(2), boundsIn, changedBlocks);
-                    this.placeLeaves(worldIn, blockpos1.east(2), boundsIn, changedBlocks);
-                    this.placeLeaves(worldIn, blockpos1.east(2).south(), boundsIn, changedBlocks);
-                    this.placeLeaves(worldIn, blockpos1.south(2), boundsIn, changedBlocks);
-                    this.placeLeaves(worldIn, blockpos1.south(2).east(), boundsIn, changedBlocks);
-                    this.placeLeaves(worldIn, blockpos1.south(2).east(2), boundsIn, changedBlocks);
+                    this.placeLeaves(worldIn, blockpos1.west(2).south(), boundsIn, changedBlocks);
+                    this.placeLeaves(worldIn, blockpos1.west(2).south(2), boundsIn, changedBlocks);
+                    this.placeLeaves(worldIn, blockpos1.east(3), boundsIn, changedBlocks);
+                    this.placeLeaves(worldIn, blockpos1.east(3).south(), boundsIn, changedBlocks);
+                    this.placeLeaves(worldIn, blockpos1.east(3).north(), boundsIn, changedBlocks);
+                    this.placeLeaves(worldIn, blockpos1.east(3).south(2), boundsIn, changedBlocks);
+                    this.placeLeaves(worldIn, blockpos1.south(3), boundsIn, changedBlocks);
+                    this.placeLeaves(worldIn, blockpos1.south(3).east(), boundsIn, changedBlocks);
+                    this.placeLeaves(worldIn, blockpos1.south(3).east(2), boundsIn, changedBlocks);
+                    this.placeLeaves(worldIn, blockpos1.south(3).west(), boundsIn, changedBlocks);
                 }
 
-                BlockPos blockpos1 = new BlockPos(j, k + height, l);
+                BlockPos blockpos1 = new BlockPos(j-1, k + height, l-1);
+                for (int j4 = 0; j4 < 16; ++j4) {
+                    this.placeLeaves(worldIn, blockpos1.east(j4 % 4).south(j4 / 4), boundsIn, changedBlocks);
+                }
+                blockpos1 = blockpos1.up().east().south();
                 this.placeLeaves(worldIn, blockpos1, boundsIn, changedBlocks);
                 this.placeLeaves(worldIn, blockpos1.east(), boundsIn, changedBlocks);
                 this.placeLeaves(worldIn, blockpos1.south(), boundsIn, changedBlocks);
