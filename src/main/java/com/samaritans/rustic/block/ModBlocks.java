@@ -3,6 +3,7 @@ package com.samaritans.rustic.block;
 import com.samaritans.rustic.Rustic;
 import com.samaritans.rustic.Util;
 import com.samaritans.rustic.block.trees.IronwoodTree;
+import com.samaritans.rustic.block.trees.YewTree;
 import com.samaritans.rustic.block.util.*;
 import com.samaritans.rustic.client.renderer.CabinetTileEntityRenderer;
 import net.minecraft.block.*;
@@ -181,7 +182,7 @@ public class ModBlocks {
 //                Util.setup(new StandingSignBlock(Block.Properties.create(Material.WOOD).doesNotBlockMovement().hardnessAndResistance(1.0F).sound(SoundType.WOOD)), "ironwood_sign"),
 //                Util.setup(new WallSignBlock(Block.Properties.create(Material.WOOD).doesNotBlockMovement().hardnessAndResistance(1.0F).sound(SoundType.WOOD)), "ironwood_wall_sign"),
 
-                Util.setup(new ModSaplingBlock(new IronwoodTree(), Block.Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().hardnessAndResistance(0).sound(SoundType.PLANT)), "yew_sapling"),
+                Util.setup(new ModSaplingBlock(new YewTree(), Block.Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().hardnessAndResistance(0).sound(SoundType.PLANT)), "yew_sapling"),
                 Util.setup(new LogBlock(MaterialColor.IRON, LOG_PROPERTIES), "yew_log"),
                 Util.setup(new LogBlock(MaterialColor.IRON, LOG_PROPERTIES), "stripped_yew_log"),
                 Util.setup(new RotatedPillarBlock(LOG_PROPERTIES), "yew_wood"),
@@ -272,6 +273,8 @@ public class ModBlocks {
         Map<Block, Block> map = new HashMap<>(AxeItem.BLOCK_STRIPPING_MAP);
         map.put(ModBlocks.IRONWOOD_LOG, ModBlocks.STRIPPED_IRONWOOD_LOG);
         map.put(ModBlocks.IRONWOOD_WOOD, ModBlocks.STRIPPED_IRONWOOD_WOOD);
+        map.put(ModBlocks.YEW_LOG, ModBlocks.STRIPPED_YEW_LOG);
+        map.put(ModBlocks.YEW_WOOD, ModBlocks.STRIPPED_YEW_WOOD);
         AxeItem.BLOCK_STRIPPING_MAP = map;
     }
 }

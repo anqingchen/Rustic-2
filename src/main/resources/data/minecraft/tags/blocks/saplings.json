@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "rustic:ironwood_sapling"
+    "rustic:ironwood_sapling",
+    "rustic:yew_sapling"
   ]
 }

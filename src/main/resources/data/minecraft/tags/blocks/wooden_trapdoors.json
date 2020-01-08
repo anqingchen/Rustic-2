@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "rustic:ironwood_trapdoor"
+    "rustic:ironwood_trapdoor",
+    "rustic:yew_trapdoor"
   ]
 }
