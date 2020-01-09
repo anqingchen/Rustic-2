@@ -2,7 +2,7 @@
   "parent": "block/block",
   "textures": {
     "side_out": "rustic:block/pots/pot_side_9",
-    "side_in": "rustic:block/pots/pot_side_9",
+    "side_in": "rustic:block/pots/pot_side_8",
     "top": "rustic:block/pots/pot_top_9",
     "particle": "rustic:block/pots/pot_side_9"
   },

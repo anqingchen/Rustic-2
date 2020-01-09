@@ -76,7 +76,7 @@ public class ChairBlock extends Block {
             Vec3i facingVec = facing.getDirectionVec();
             double xOffset = facingVec.getX() * -0.125;
             double zOffset = facingVec.getZ() * -0.125;
-            chair.setPosition(pos.getX() + 0.5 + xOffset, pos.getY() + 0.4, pos.getZ() + 0.5 + zOffset);
+            chair.setPosition(pos.getX() + 0.5 + xOffset, pos.getY() + 0.275, pos.getZ() + 0.5 + zOffset);
             worldIn.addEntity(chair);
             if (player.startRiding(chair)) {
                 player.setPositionAndUpdate(chair.posX, chair.posY, chair.posZ);
@@ -92,19 +92,13 @@ public class ChairBlock extends Block {
         }
 
         @Override
-        protected void registerData() {
-
-        }
+        protected void registerData() {}
 
         @Override
-        protected void readAdditional(CompoundNBT compound) {
-
-        }
+        protected void readAdditional(CompoundNBT compound) {}
 
         @Override
-        protected void writeAdditional(CompoundNBT compound) {
-
-        }
+        protected void writeAdditional(CompoundNBT compound) {}
 
         @Override
         public IPacket<?> createSpawnPacket() {
@@ -124,6 +118,7 @@ public class ChairBlock extends Block {
 
         @Override
         public void tick() {
+        	final boolean justCreated = this.firstUpdate; // must copy into a variable since firstUpdate is set to false by this.update
             super.tick();
             BlockPos pos = getPosition();
             if (!(world.getBlockState(pos).getBlock() instanceof ChairBlock)) {
@@ -131,7 +126,7 @@ public class ChairBlock extends Block {
                 return;
             }
             List<Entity> passengers = getPassengers();
-            if (passengers.isEmpty()) {
+            if (!justCreated && passengers.isEmpty()) {
                 this.remove();
             }
             if (!world.isRemote) {

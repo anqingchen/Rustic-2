@@ -1,0 +1,17 @@
+{
+  "elements": [
+    {
+      "name": "LegNW",
+      "from": [ 1, 0, 1 ],
+      "to": [ 3, 14, 3 ],
+      "faces": {
+        "north": { "texture": "#planks", "uv": [ 0, 1, 14, 3 ], "rotation": 90 },
+        "east": { "texture": "#planks", "uv": [ 0, 5, 14, 7 ], "rotation": 90 },
+        "south": { "texture": "#planks", "uv": [ 0, 9, 14, 11 ], "rotation": 90 },
+        "west": { "texture": "#planks", "uv": [ 0, 13, 14, 15 ], "rotation": 90 },
+        "up": { "texture": "#planks", "uv": [ 0, 0, 2, 2 ] },
+        "down": { "texture": "#planks", "uv": [ 0, 0, 2, 2 ] }
+      }
+    }
+  ]
+}
