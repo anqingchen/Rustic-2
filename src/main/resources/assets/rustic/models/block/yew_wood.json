@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "rustic:block/yew_log",
+        "side": "rustic:block/yew_log"
+    }
+}

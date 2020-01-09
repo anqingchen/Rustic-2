@@ -1,8 +1,8 @@
 {
   "__comment": "Model generated using MrCrayfish's Model Creator (http://mrcrayfish.com/modelcreator/)",
   "textures": {
-    "0": "block/spruce_planks",
-    "particle": "block/spruce_planks"
+    "0": "rustic:block/yew_planks",
+    "particle": "rustic:block/yew_planks"
   },
   "elements": [
     {
@@ -57,15 +57,6 @@
             2.0
           ],
           "rotation": 90
-        },
-        "up": {
-          "texture": "#-1",
-          "uv": [
-            0.0,
-            0.0,
-            2.0,
-            2.0
-          ]
         },
         "down": {
           "texture": "#0",

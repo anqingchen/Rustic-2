@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "type=bottom": { "model": "rustic:block/yew_slab" },
+        "type=top": { "model": "rustic:block/yew_slab_top" },
+        "type=double": { "model": "rustic:block/yew_planks" }
+    }
+}
