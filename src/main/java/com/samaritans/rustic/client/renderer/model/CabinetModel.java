@@ -2,7 +2,10 @@ package com.samaritans.rustic.client.renderer.model;
 
 import net.minecraft.client.renderer.entity.model.RendererModel;
 import net.minecraft.client.renderer.model.Model;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class CabinetModel extends Model {
     public RendererModel door;
     // fields

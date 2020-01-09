@@ -18,8 +18,11 @@ import net.minecraft.tileentity.IChestLid;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 // todo: possibly allow mirror, or render items inside cabinet?
+@OnlyIn(Dist.CLIENT)
 public class CabinetTileEntityRenderer<T extends TileEntity & IChestLid> extends TileEntityRenderer<T> {
     protected static final ResourceLocation TEXTURE_NORMAL = new ResourceLocation("rustic:textures/model/cabinet.png");
     protected static final ResourceLocation TEXTURE_DOUBLE = new ResourceLocation("rustic:textures/model/cabinet_double.png");

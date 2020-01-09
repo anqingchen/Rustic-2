@@ -12,8 +12,12 @@ import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+
 import org.lwjgl.opengl.GL11;
 
+@OnlyIn(Dist.CLIENT)
 public class PotTileEntityRenderer extends TileEntityRenderer<PotTileEntity> {
     @Override
     public void render(PotTileEntity tank, double x, double y, double z, float partialTicks, int destroyStage) {
@@ -32,10 +36,10 @@ public class PotTileEntityRenderer extends TileEntityRenderer<PotTileEntity> {
             double fluidHeight = 0.125 + (0.8125 * ((float) amount / (float) capacity));
             float fluidRadius = ((PotBlock) tank.getBlockState().getBlock()).getInnerRadius((int) (fluidHeight * 16));
 
-            float minU = stillSprite.getInterpolatedU(0);
-            float maxU = stillSprite.getInterpolatedU(16);
-            float minV = stillSprite.getInterpolatedV(0);
-            float maxV = stillSprite.getInterpolatedV(16);
+            float minU = stillSprite.getInterpolatedU(16 * (0.5 - fluidRadius));
+            float maxU = stillSprite.getInterpolatedU(16 * (0.5 + fluidRadius));
+            float minV = stillSprite.getInterpolatedV(16 * (0.5 - fluidRadius));
+            float maxV = stillSprite.getInterpolatedV(16 * (0.5 + fluidRadius));
 
             int i = getWorld().getCombinedLight(tank.getPos(), fluid.getAttributes().getLuminosity());
             int lightx = i >> 0x10 & 0xFFFF;

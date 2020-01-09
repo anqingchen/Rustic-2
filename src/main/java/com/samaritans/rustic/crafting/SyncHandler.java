@@ -7,6 +7,7 @@ import com.samaritans.rustic.network.PacketHandler;
 import com.samaritans.rustic.network.SyncRecipesPacket;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.resources.IResourceManager;
+import net.minecraft.resources.IResourceManagerReloadListener;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
@@ -15,13 +16,10 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.network.PacketDistributor;
-import net.minecraftforge.resource.IResourceType;
-import net.minecraftforge.resource.ISelectiveResourceReloadListener;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Predicate;
 
 /**
  * This part of the code that handles Recipes are mimicked from Botania,
@@ -34,9 +32,9 @@ public class SyncHandler {
         return new SyncRecipesPacket(RusticAPI.crushingTubRecipes);
     }
 
-    public static class ReloadListener implements ISelectiveResourceReloadListener {
+    public static class ReloadListener implements IResourceManagerReloadListener {
         @Override
-        public void onResourceManagerReload(IResourceManager resourceManager, Predicate<IResourceType> resourcePredicate) {
+        public void onResourceManagerReload(IResourceManager resourceManager) {
             Map<ResourceLocation, CrushingTubRecipe> crushingTub = new HashMap<>();
 
             RegisterRecipesEvent event = new RegisterRecipesEvent(
