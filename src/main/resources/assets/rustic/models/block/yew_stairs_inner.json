@@ -1,0 +1,8 @@
+{
+    "parent": "block/inner_stairs",
+    "textures": {
+        "bottom": "rustic:block/yew_planks",
+        "top": "rustic:block/yew_planks",
+        "side": "rustic:block/yew_planks"
+    }
+}
