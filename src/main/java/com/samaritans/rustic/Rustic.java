@@ -1,36 +1,26 @@
 package com.samaritans.rustic;
 
 import com.samaritans.rustic.block.ModBlocks;
-import com.samaritans.rustic.client.renderer.CabinetTileEntityRenderer;
-import com.samaritans.rustic.client.renderer.CrushingTubTileEntityRenderer;
-import com.samaritans.rustic.client.renderer.PotTileEntityRenderer;
 import com.samaritans.rustic.crafting.SyncHandler;
 import com.samaritans.rustic.network.PacketHandler;
 import com.samaritans.rustic.proxy.ClientProxy;
 import com.samaritans.rustic.proxy.IProxy;
 import com.samaritans.rustic.proxy.ServerProxy;
-import com.samaritans.rustic.tileentity.CabinetTileEntity;
-import com.samaritans.rustic.tileentity.CrushingTubTileEntity;
-import com.samaritans.rustic.tileentity.PotTileEntity;
 import com.samaritans.rustic.world.ModWorldGen;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.loading.FMLEnvironment;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -62,7 +52,7 @@ public class Rustic {
         modEventBus.addListener(this::enqueueIMC);
         // Register the processIMC method for modloading
         modEventBus.addListener(this::processIMC);
-        // Register the doClientStuff method for modloading
+        modEventBus.addListener(this::loadComplete);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
@@ -89,6 +79,10 @@ public class Rustic {
 //                map(m->m.getMessageSupplier().get()).
 //                collect(Collectors.toList()));
     }
+    
+    private void loadComplete(FMLLoadCompleteEvent event) {
+		
+	}
 
     private void serverAboutToStart(FMLServerAboutToStartEvent event) {
         event.getServer().getResourceManager().addReloadListener(new SyncHandler.ReloadListener());
