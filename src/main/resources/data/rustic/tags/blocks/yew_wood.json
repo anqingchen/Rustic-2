@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "rustic:yew_log",
+    "rustic:yew_wood",
+    "rustic:stripped_yew_log",
+    "rustic:stripped_yew_wood",
+		"rustic:yew_planks",
+		"rustic:yew_slab",
+		"rustic:yew_stairs",
+		"rustic:yew_pressure_plate",
+		"rustic:yew_fence",
+		"rustic:yew_fence_gate",
+		"rustic:yew_trapdoor",
+		"rustic:yew_door"
+  ]
+}

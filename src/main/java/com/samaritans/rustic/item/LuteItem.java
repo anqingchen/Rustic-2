@@ -41,6 +41,8 @@ public class LuteItem extends Item implements ICastingItem {
 			// TODO use spell catalyst, unless in creative mod
 			// TODO play sound
 			// TODO change how usage works
+			// TODO swing arm when casting
+			// TODO add cooldown?
 			
 			LuteSpellEntity ent = new LuteSpellEntity(player, 1.0f, world).setSpell(spell);
 			ent.shoot(player, player.rotationPitch, player.rotationYaw, 0.0f, 0.5f, 0.05f);
