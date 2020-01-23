@@ -81,7 +81,7 @@ public class Rustic {
     }
     
     private void loadComplete(FMLLoadCompleteEvent event) {
-		
+		proxy.loadComplete();
 	}
 
     private void serverAboutToStart(FMLServerAboutToStartEvent event) {

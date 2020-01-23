@@ -13,6 +13,8 @@ public interface IProxy {
 		return getDist().isDedicatedServer();
 	}
 	
+	public void loadComplete();
+	
 	/* 
 	 * TODO add functions that can be called from client or server side,
 	 * but with different implementations depending on the side

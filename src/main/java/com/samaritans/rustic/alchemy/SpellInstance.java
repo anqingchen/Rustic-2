@@ -1,7 +1,6 @@
 package com.samaritans.rustic.alchemy;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.MathHelper;
@@ -11,19 +10,23 @@ import net.minecraftforge.common.util.Constants;
 
 public class SpellInstance {
 	
-	private SpellEffect effect;
+	private AlchemySpell spell;
 	private float castingStrength;
-	private int potencyLevel = 0, durationLevel = 0;
 	
-	public SpellInstance(SpellEffect effect, float castingStrength, int potencyLevel, int durationLevel) {
-		this.effect = effect;
+	public SpellInstance(SpellEffect effect, int potencyLevel, int durationLevel, float castingStrength) {
+		this(new AlchemySpell(effect, potencyLevel, durationLevel), castingStrength);
+	}
+	public SpellInstance(AlchemySpell spell, float castingStrength) {
+		this.spell = spell;
 		this.castingStrength = MathHelper.clamp(castingStrength, 0f, 1f);
-		this.potencyLevel = Math.max(potencyLevel, 0);
-		this.durationLevel = Math.max(durationLevel, 0);
+	}
+	
+	public AlchemySpell getSpell() {
+		return this.spell;
 	}
 	
 	public SpellEffect getSpellEffect() {
-		return effect;
+		return (this.spell != null) ? this.spell.getSpellEffect() : null;
 	}
 	
 	public float getCastingStrength() {
@@ -31,11 +34,11 @@ public class SpellInstance {
 	}
 	
 	public int getPotencyLevel() {
-		return potencyLevel;
+		return (this.spell != null) ? this.spell.getPotencyLevel() : 0;
 	}
 	
 	public int getDurationLevel() {
-		return durationLevel;
+		return (this.spell != null) ? this.spell.getDurationLevel() : 0;
 	}
 	
 	public SpellInstance setCastingStrength(float castingStrength) {
@@ -44,52 +47,49 @@ public class SpellInstance {
 	}
 	
 	public SpellInstance setPotencyLevel(int potencyLevel) {
-		this.potencyLevel = Math.max(potencyLevel, 0);
+		if (this.spell != null) this.spell.setPotencyLevel(potencyLevel);
 		return this;
 	}
 	
 	public SpellInstance setDurationLevel(int durationLevel) {
-		this.durationLevel = Math.max(durationLevel, 0);
+		if (this.spell != null) this.spell.setDurationLevel(durationLevel);
 		return this;
 	}
 	
-	public void applyEffect(CastingContext context) {
-		if (effect != null)
-			effect.applyEffect(this, context);
+	public boolean applyEffect(CastingContext context) {
+		if (this.spell != null && !this.spell.isEmpty())
+			return spell.getSpellEffect().applyEffect(this, context);
+		return false;
 	}
-	public void applyEffect(RayTraceResult rayTraceResult, Entity sourceEntity, Entity caster, World world) {
-		applyEffect(new CastingContext(rayTraceResult, sourceEntity, caster, world));
+	public boolean applyEffect(RayTraceResult rayTraceResult, Entity sourceEntity, Entity caster, World world) {
+		return applyEffect(new CastingContext(rayTraceResult, sourceEntity, caster, world));
 	}
 	
 	public static SpellInstance read(PacketBuffer buf) {
-		return new SpellInstance(SpellEffect.read(buf), buf.readFloat(), buf.readByte(), buf.readByte());
+		return new SpellInstance(AlchemySpell.read(buf), buf.readFloat());
 	}
 	
 	public void write(PacketBuffer buf) {
-		effect.write(buf);
+		AlchemySpell spell = (this.spell != null) ? this.spell : new AlchemySpell(null, 0, 0);
+		spell.write(buf);
 		buf.writeFloat(castingStrength);
-		buf.writeByte(potencyLevel);
-		buf.writeByte(durationLevel);
 	}
 	
 	public static SpellInstance read(CompoundNBT nbt) {
-		SpellEffect effect = SpellEffect.read(nbt);
-		if (effect == null || !nbt.contains("castingStrength", Constants.NBT.TAG_FLOAT))
+		AlchemySpell spell = AlchemySpell.read(nbt);
+		if (spell == null || spell.isEmpty() || nbt == null || !nbt.contains("castingStrength", Constants.NBT.TAG_FLOAT))
 			return null;
-		return new SpellInstance(effect, nbt.getFloat("castingStrength"), nbt.getInt("potencyLevel"), nbt.getInt("durationLevel"));
+		return new SpellInstance(spell, nbt.getFloat("castingStrength"));
 	}
 
-	public void write(CompoundNBT nbt) {
-		effect.write(nbt);
+	public CompoundNBT write(CompoundNBT nbt) {
+		spell.write(nbt);
 		nbt.putFloat("castingStrength", castingStrength);
-		nbt.putInt("potencyLevel", potencyLevel);
-		nbt.putInt("durationLevel", durationLevel);
+		return nbt;
 	}
 	
 	public CompoundNBT toNBT() {
-		CompoundNBT nbt = new CompoundNBT();
-		write(nbt);
-		return nbt;
+		return write(new CompoundNBT());
 	}
 	
 }

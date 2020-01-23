@@ -2,9 +2,12 @@ package com.samaritans.rustic.alchemy;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 
 import com.samaritans.rustic.Rustic;
+import com.samaritans.rustic.Util;
 
+import net.minecraft.potion.Effects;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -17,12 +20,34 @@ import net.minecraftforge.registries.RegistryBuilder;
 @ObjectHolder(Rustic.MODID)
 public class ModSpells {
 	
+	public static final SpellEffect POISON = null;
+	public static final SpellEffect REGENERATION = null;
+	public static final SpellEffect WITHER = null;
+	public static final SpellEffect INSTANT_DAMAGE = null;
+	public static final SpellEffect INSTANT_HEALTH = null;
+	public static final SpellEffect IGNITE = null;
+	
 	@SubscribeEvent
 	public static void onRegisterSpellEffects(RegistryEvent.Register<SpellEffect> event) {
 		IForgeRegistry<SpellEffect> registry = event.getRegistry();
 		
-		// TODO register SpellEffects
-	}	
+		registry.registerAll(
+				Util.setup(new PotionSpellEffect(Effects.POISON, 1, 600, 1200, 1800), "poison"),
+				Util.setup(new PotionSpellEffect(Effects.REGENERATION, 1, 600, 1200, 1800), "regeneration"),
+				Util.setup(new PotionSpellEffect(Effects.WITHER, 1, 600, 1200, 1800), "wither"),
+				Util.setup(new PotionSpellEffect(Effects.INSTANT_DAMAGE, 1, 0), "instant_damage"),
+				Util.setup(new PotionSpellEffect(Effects.INSTANT_HEALTH, 1, 0), "instant_health"),
+				Util.setup(new IgniteSpellEffect(), "ignite")
+		);
+	}
+	
+	public static ArrayList<AlchemySpell> getAllAlchemySpells() {
+		ArrayList<AlchemySpell> spells = new ArrayList<>();
+		for (SpellEffect effect : SpellEffect.REGISTRY.getValues()) {
+			effect.fillAlchemySpellList(spells);
+		}
+		return spells;
+	}
 	
 	@SubscribeEvent
 	public static void createRegistries(RegistryEvent.NewRegistry event) throws Exception {

@@ -1,0 +1,24 @@
+{
+	
+	"item.rustic.lute": "Yew Wood Lute",
+	"item.rustic.spell_catalyst": "Spell Catalyst",
+	"item.rustic.spell_catalyst.spell": "Spell Catalyst (%s)",
+	
+	"spell_effect.rustic.none": "None",
+	"spell_effect.rustic.ignite": "Ignite",
+	"spell_effect.rustic.dispel": "Dispel",
+	"spell_modifier.rustic.potency": "Potency",
+	"spell_modifier.rustic.duration": "Duration",
+	
+	"numeral.rustic.1": "I",
+	"numeral.rustic.2": "II",
+	"numeral.rustic.3": "III",
+	"numeral.rustic.4": "IV",
+	"numeral.rustic.5": "V",
+	"numeral.rustic.6": "VI",
+	"numeral.rustic.7": "VII",
+	"numeral.rustic.8": "VIII",
+	"numeral.rustic.9": "IX",
+	"numeral.rustic.10": "X"
+	
+}

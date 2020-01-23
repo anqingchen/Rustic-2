@@ -20,6 +20,7 @@ public class PacketHandler {
     public static void registerMessages() {
         int id = 0;
         HANDLER.registerMessage(id++, DismountChairPacket.class, DismountChairPacket::encode, DismountChairPacket::decode, DismountChairPacket::handle);
+        HANDLER.registerMessage(id++, SpellSelectPacket.class, SpellSelectPacket::encode, SpellSelectPacket::decode, SpellSelectPacket::handle);
         HANDLER.registerMessage(id++, SyncRecipesPacket.class, SyncRecipesPacket::encode, SyncRecipesPacket::decode, SyncRecipesPacket::handle);
     }
 

@@ -36,7 +36,7 @@ import static net.minecraft.entity.player.PlayerEntity.REACH_DISTANCE;
 
 public class ChairBlock extends Block {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
-    public static final VoxelShape SHAPE = VoxelShapes.create(0.125D, 0.0D, 0.125D, 0.875D, 1.125D, 0.875D);
+    public static final VoxelShape SHAPE = VoxelShapes.create(0.125D, 0.0D, 0.125D, 0.875D, 1.0D, 0.875D);
 
     public ChairBlock(Properties properties) {
         super(properties);
@@ -70,7 +70,7 @@ public class ChairBlock extends Block {
             return true;
         }
         if (!worldIn.isRemote) {
-            ChairEntity chair = new ChairEntity(ModEntities.chair, worldIn);
+            ChairEntity chair = new ChairEntity(ModEntities.CHAIR, worldIn);
             Direction facing = state.get(FACING);
             chair.rotationYaw = facing.getHorizontalAngle();
             Vec3i facingVec = facing.getDirectionVec();

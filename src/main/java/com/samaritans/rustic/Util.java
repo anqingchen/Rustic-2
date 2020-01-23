@@ -46,9 +46,17 @@ public class Util {
         float f5 = MathHelper.sin(-f * ((float)Math.PI / 180F));
         float f6 = f3 * f4;
         float f7 = f2 * f4;
-        double d0 = player.getAttribute(PlayerEntity.REACH_DISTANCE).getValue();;
+        double d0 = player.getAttribute(PlayerEntity.REACH_DISTANCE).getValue();
         Vec3d vec3d1 = vec3d.add((double)f6 * d0, (double)f5 * d0, (double)f7 * d0);
         return worldIn.rayTraceBlocks(new RayTraceContext(vec3d, vec3d1, RayTraceContext.BlockMode.OUTLINE, fluidMode, player));
+    }
+    
+    public static int rgbInt(float r, float g, float b) {
+    	return (((int) (r * 255) & 255) << 16) | (((int) (g * 255) & 255) << 8) | ((int) (b * 255) & 255);
+    }
+    
+    public static int rgbInt(int r, int g, int b) {
+    	return ((r & 255) << 16) | ((g & 255) << 8) | (b & 255);
     }
 
 //    public static int calculateColor(@Nullable TextureAtlasSprite sprite) {

@@ -39,5 +39,9 @@ public class CastingContext {
 			return ((BlockRayTraceResult) rayTraceResult).getFace();
 		return null;
 	}
+	
+	public RayTraceResult.Type getRayTraceType() {
+		return rayTraceResult.getType();
+	}
 
 }

@@ -9,4 +9,7 @@ public class ServerProxy implements IProxy {
 		return Dist.DEDICATED_SERVER;
 	}
 
+	@Override
+	public void loadComplete() {}
+
 }

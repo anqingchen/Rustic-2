@@ -1,9 +1,17 @@
 package com.samaritans.rustic.alchemy;
 
+import javax.annotation.Nonnull;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.math.RayTraceContext;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class PotionSpellEffect extends SpellEffect {
 
@@ -25,7 +33,8 @@ public class PotionSpellEffect extends SpellEffect {
 	}
 	
 	@Override
-	public void applyEffect(SpellInstance spell, CastingContext context) {
+	public boolean applyEffect(SpellInstance spell, CastingContext context) {
+		if (context.world.isRemote) return false;
 		Entity targetEntity = context.getTargetEntity();
 		if (targetEntity != null && targetEntity instanceof LivingEntity) {
 			LivingEntity target = (LivingEntity) targetEntity;
@@ -34,10 +43,13 @@ public class PotionSpellEffect extends SpellEffect {
 			} else {
 				int durationLevel = spell.getDurationLevel();
 				int duration = (durationLevel < durations.length) ? durations[durationLevel] : durations[durations.length - 1];
-				duration = (int) (duration * spell.getCastingStrength());
+				// TODO change how duration scales with potency?
+				duration = (int) (duration * spell.getCastingStrength() / (spell.getPotencyLevel() + 0.8f));
 				target.addPotionEffect(new EffectInstance(potionType, duration, spell.getPotencyLevel(), false, true));
 			}
+			return true;
 		}
+		return false;
 	}
 
 	@Override
@@ -66,6 +78,42 @@ public class PotionSpellEffect extends SpellEffect {
 	@Override
 	public int getColor() {
 		return potionType.getLiquidColor();
+	}
+	
+	@Override
+	public RayTraceContext.BlockMode getRayTraceBlockMode() {
+		return RayTraceContext.BlockMode.COLLIDER;
+	}
+	
+	@Override
+	public int getAutoCastingCooldown(int potencyLevel, int durationLevel) {
+		return 20 * 15; // TODO balance (mainly for instant healing effect)
+	}
+	
+	@Override
+	public boolean shouldAutoCast(@Nonnull LivingEntity entity) {
+		EffectInstance activeEffect = entity.getActivePotionEffect(this.potionType);
+		if (activeEffect != null) {
+			int timeThreshold = (this.potionType == Effects.NIGHT_VISION || this.potionType == Effects.NAUSEA) ? 200 : 50;
+			return activeEffect.getDuration() <= timeThreshold;
+		} else {
+			return true;
+		}
+	}
+	
+	@Override
+	public String getTranslationKey() {
+		return this.potionType.getName();
+	}
+	
+	@Override
+	public ITextComponent getDisplayName() {
+		return this.potionType.getDisplayName();
+	}
+	
+	@Override
+	public ITextComponent getDisplayName(AlchemySpell spell) {
+		return this.potionType.getDisplayName();
 	}
 	
 	public int getBaseDuration() {
