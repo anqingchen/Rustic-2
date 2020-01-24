@@ -33,7 +33,7 @@ public class IgniteSpellEffect extends SpellEffect {
 		if (world.isRemote) return false;
 		if (context.getRayTraceType() == Type.ENTITY) {
 			final Entity target = context.getTargetEntity();
-			if (target.isWet()) return false;
+			//if (target.isWet()) return false; // TODO re-enable?
 			final float castingStrength = spell.getCastingStrength();
 			final int duration = Math.max(MathHelper.ceil(DURATIONS[spell.getDurationLevel()] * castingStrength), 1);
 			final float damage = Math.max(MathHelper.ceil(DAMAGES[spell.getPotencyLevel()] * castingStrength), 1f);

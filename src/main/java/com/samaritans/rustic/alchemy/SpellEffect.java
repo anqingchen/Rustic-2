@@ -73,7 +73,8 @@ public abstract class SpellEffect extends ForgeRegistryEntry<SpellEffect> implem
 		return this.getTranslationKey();
 	}
 	
-	public String getEffectName() {
+	// TODO remove?
+	protected String getEffectName() {
 		return this.getRegistryName().getPath();
 	}
 	

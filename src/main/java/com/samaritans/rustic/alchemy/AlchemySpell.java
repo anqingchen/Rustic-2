@@ -104,7 +104,7 @@ public class AlchemySpell implements Comparable<AlchemySpell> {
 
 	@Override
 	public boolean equals(Object b) {
-		if ((b instanceof AlchemySpell) && (b != null)) {
+		if ((b != null) && (b instanceof AlchemySpell)) {
 			AlchemySpell spell = (AlchemySpell) b;
 			if (spell.isEmpty() && this.isEmpty()) return true;
 			return spell.effect == this.effect &&

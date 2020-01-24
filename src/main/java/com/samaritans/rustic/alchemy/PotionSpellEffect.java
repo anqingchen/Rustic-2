@@ -16,10 +16,11 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class PotionSpellEffect extends SpellEffect {
 
 	public final Effect potionType;
-	private final int maxPotency;
-	private final int[] durations;
+	protected final int maxPotency;
+	protected final int[] durations;
+	protected final boolean usePotionEffectName;
 	
-	PotionSpellEffect(Effect potionType, int maxPotency, int baseDuration, int... boostedDurations) {
+	PotionSpellEffect(Effect potionType, boolean usePotionEffectName, int maxPotency, int baseDuration, int... boostedDurations) {
 		this.potionType = potionType;
 		this.maxPotency = maxPotency;
 		if (potionType.isInstant()) {
@@ -30,6 +31,11 @@ public class PotionSpellEffect extends SpellEffect {
 			for (int i = 0; i < boostedDurations.length; i++)
 				this.durations[i + 1] = boostedDurations[i];
 		}
+		this.usePotionEffectName = usePotionEffectName;
+	}
+	
+	PotionSpellEffect(Effect potionType, int maxPotency, int baseDuration, int... boostedDurations) {
+		this(potionType, true, maxPotency, baseDuration, boostedDurations);
 	}
 	
 	@Override
@@ -103,17 +109,17 @@ public class PotionSpellEffect extends SpellEffect {
 	
 	@Override
 	public String getTranslationKey() {
-		return this.potionType.getName();
+		return (this.usePotionEffectName) ? this.potionType.getName() : super.getTranslationKey();
 	}
 	
 	@Override
 	public ITextComponent getDisplayName() {
-		return this.potionType.getDisplayName();
+		return (this.usePotionEffectName) ? this.potionType.getDisplayName() : super.getDisplayName();
 	}
 	
 	@Override
 	public ITextComponent getDisplayName(AlchemySpell spell) {
-		return this.potionType.getDisplayName();
+		return (this.usePotionEffectName) ? this.potionType.getDisplayName() : super.getDisplayName(spell);
 	}
 	
 	public int getBaseDuration() {

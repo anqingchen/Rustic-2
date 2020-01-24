@@ -99,8 +99,9 @@ public class SpellRadialScreen extends Screen {
 	protected void selectSpellAndClose(int selectedOption) {
 		AlchemySpell spell = this.getSelectedSpell(selectedOption);
 		if (!this.isCasterSlotCurio) {
-			ItemStack stack = minecraft.player.inventory.getStackInSlot(this.casterSlot);
+			ItemStack stack = minecraft.player.inventory.getStackInSlot(this.casterSlot).copy();
 			ICastingItem.setSelectedSpell(spell, stack);
+			minecraft.player.inventory.setInventorySlotContents(this.casterSlot, stack);
 		} else {
 			// TODO update selected spell of stack in curio slot
 		}
@@ -268,7 +269,7 @@ public class SpellRadialScreen extends Screen {
 		final float scale = 2f;
 		final int x = (int) (((this.width / 2) / scale) - 8);
 		final int y = (int) (((this.height / 2) / scale) - 8);
-		RenderHelper.enableStandardItemLighting();
+		RenderHelper.enableStandardItemLighting(); // TODO don't enable or disable standard item lighting?
 		GlStateManager.pushMatrix();
 		GlStateManager.scalef(scale, scale, scale);
 		if (this.isValidOption(selectedOption)) {

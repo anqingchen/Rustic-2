@@ -11,12 +11,14 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.InputEvent.KeyInputEvent;
 import net.minecraftforge.client.event.InputEvent.MouseInputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 
+@OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(modid = Rustic.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class KeyHandler {
 	
@@ -30,11 +32,9 @@ public class KeyHandler {
 	
 	public static void onOpenSpellRadialKeyBindPressed() {
 		Minecraft mc = Minecraft.getInstance();
-		// TODO check if either of the player's hands is holding a spell casting item
-		// TODO pass list of options to radial (don't open screen if there are no options)
-		// TODO pass slot of casting item to the screen
 		if (mc.currentScreen == null) {
 			if (mc.player == null) return;
+			
 			final int playerMainHandSlot = mc.player.inventory.currentItem;
 			final int playerOffHandSlot = mc.player.inventory.mainInventory.size() + mc.player.inventory.armorInventory.size();
 			
@@ -73,12 +73,13 @@ public class KeyHandler {
 				}
 			}
 			
-			if (!casterStack.isEmpty() && (casterSlot >= 0)) {
+			if (!casterStack.isEmpty() && (casterSlot >= 0) && (!mc.player.isHandActive() || (mc.player.getActiveItemStack() != casterStack))) {
 				NonNullList<ItemStack> catalystOptions = ((ICastingItem) casterStack.getItem()).findCatalystsForRadial(casterStack, mc.player);
 				if (!catalystOptions.isEmpty())
 					mc.displayGuiScreen(new SpellRadialScreen(casterStack, casterSlot, isCurioSlot, catalystOptions));
 			}
 		} else if (mc.currentScreen instanceof SpellRadialScreen) {
+			// allow closing the radial without selecting a spell by pressing the same key used to open it
 			mc.currentScreen.onClose();
 		}
 	}

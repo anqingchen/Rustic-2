@@ -37,8 +37,9 @@ public class SpellSelectPacket {
             ServerPlayerEntity player = context.get().getSender();
             if (player == null) return;
             if (!this.isCurioSlot) {
-            	ItemStack stack = player.inventory.getStackInSlot(this.slot);
+            	ItemStack stack = player.inventory.getStackInSlot(this.slot).copy();
             	ICastingItem.setSelectedSpell(this.spell, stack);
+            	player.inventory.setInventorySlotContents(this.slot, stack);
             } else {            	
             	// TODO update selected spell of stack in curio slot
             }

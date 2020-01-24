@@ -1,0 +1,40 @@
+{
+	"parent": "rustic:item/lute_model",
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [55, -5, -75],
+			"translation": [-4.75, -3.5, 0]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [55, -5, -75],
+			"translation": [-4.75, -3.5, 0]
+		},
+		"firstperson_righthand": {
+			"rotation": [18, 15, -20],
+			"translation": [3, -6, 1],
+			"scale": [2, 2, 2]
+		},
+		"firstperson_lefthand": {
+			"rotation": [18, 15, -20],
+			"translation": [3, -6, 1],
+			"scale": [2, 2, 2]
+		},
+		"ground": {
+			"translation": [0, 2.5, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"gui": {
+			"rotation": [-11, -162, -50],
+			"translation": [0.25, -0.25, 0],
+			"scale": [0.8, 0.8, 0.8]
+		},
+		"head": {
+			"rotation": [0, 0, -90],
+			"translation": [2.75, 10.5, 0]
+		},
+		"fixed": {
+			"rotation": [0, 10, -40],
+			"translation": [-0.5, -0.5, -2.5]
+		}
+	}
+}

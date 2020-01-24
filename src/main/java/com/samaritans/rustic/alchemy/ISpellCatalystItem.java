@@ -5,8 +5,6 @@ import java.util.TreeSet;
 
 import javax.annotation.Nullable;
 
-import com.samaritans.rustic.item.ModItems;
-
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -64,10 +62,7 @@ public interface ISpellCatalystItem {
 	}
 	
 	public static ItemStack findSpellCatalyst(AlchemySpell spell, PlayerEntity player) {
-		if (spell == null) return ItemStack.EMPTY;
-		if (player == null || player.abilities.isCreativeMode) {
-			return setAlchemySpell(spell, new ItemStack(ModItems.SPELL_CATALYST, 1));
-		}
+		if ((spell == null) || (player == null)) return ItemStack.EMPTY;
 		for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
 			ItemStack stack = player.inventory.getStackInSlot(i);
 			if (matchesSpell(spell, stack))

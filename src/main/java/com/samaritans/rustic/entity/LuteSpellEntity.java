@@ -43,20 +43,21 @@ public class LuteSpellEntity extends Entity implements IProjectile, IEntityAddit
 	
 	public static final DataParameter<Integer> SEGMENTS = EntityDataManager.createKey(LuteSpellEntity.class, DataSerializers.VARINT);
 	
-	protected static final int numSegments = 20;
-	
+	protected static final int numSegments = 20;	
 	protected static int defaultSegmentStates = 0;
 	static {
 		for (int i = 0; i < numSegments; i++)
 			defaultSegmentStates |= (1 << i);
 	}
 	
+	protected static final int maxLifetime = 23;
+
 	protected LivingEntity owner;
 	protected UUID ownerId;
 	protected float castingStrength = 1f;
 	protected AlchemySpell spell;
 	protected float radius;
-	protected int remainingLife;
+	protected int remainingLife, initialLife;
 	protected boolean[] segmentStates = new boolean[numSegments];
 	protected Set<Entity> hitEntities = new HashSet<>();
 	
@@ -74,7 +75,7 @@ public class LuteSpellEntity extends Entity implements IProjectile, IEntityAddit
 		this(ModEntities.LUTE_SPELL, casterEntity.posX, casterEntity.posY + casterEntity.getEyeHeight() - 0.1, casterEntity.posZ, world);
 		this.setCaster(casterEntity);
 		this.castingStrength = castingStrength;
-		this.remainingLife = MathHelper.ceil(((castingStrength + 0.5f) / 1.5f) * (1.125f * 20));
+		this.initialLife = this.remainingLife = MathHelper.ceil(((castingStrength + 0.5f) / 1.5f) * maxLifetime);
 		this.radius = (castingStrength * 0.125f) + 0.125f;
 	}
 
@@ -86,7 +87,8 @@ public class LuteSpellEntity extends Entity implements IProjectile, IEntityAddit
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public boolean isInRangeToRenderDist(double distance) {
-		return true; // TODO set to false
+		final double d0 = 5d * 64d * getRenderDistanceWeight();
+		return distance < d0 * d0;//false; // TODO set to false?
 	}
 	
 	@Override
@@ -133,6 +135,8 @@ public class LuteSpellEntity extends Entity implements IProjectile, IEntityAddit
 			final double nextSegY = this.posY + vec3d.y + (ringY * nextRadius);
 			final double nextSegZ = this.posZ + vec3d.z + (ringZ * nextRadius);
 			
+			final double velX = nextSegX - segX, velY = nextSegY - segY, velZ = nextSegZ - segZ;
+			
 			final double halfAABBWidth = (rad * this.radius / 2d) + 1d;
 			final double minX = Math.min(segX, nextSegX) - halfAABBWidth, minY = Math.min(segY, nextSegY) - halfAABBWidth, minZ = Math.min(segZ, nextSegZ) - halfAABBWidth;
 			final double maxX = Math.max(segX, nextSegX) + halfAABBWidth, maxY = Math.max(segY, nextSegY) + halfAABBWidth, maxZ = Math.max(segZ, nextSegZ) + halfAABBWidth;
@@ -152,11 +156,27 @@ public class LuteSpellEntity extends Entity implements IProjectile, IEntityAddit
 				}
 				this.segmentStates[seg] = false;
 				changedSegmentStates = true;
-				// TODO particle burst?
+				// spawn impact particles
+				if ((this.spell != null) && !this.spell.isEmpty() && this.world.isRemote) {
+					final Vec3d hitPos = blockHit.getHitVec();
+					final double distScale = MathHelper.sqrt(hitPos.squareDistanceTo(segX, segY, segZ) / ((velX * velX) + (velY * velY) + (velZ * velZ)));
+					final double r = MathHelper.lerp(distScale, this.radius, nextRadius);
+					final double px = MathHelper.lerp(distScale, this.posX, this.posX + vec3d.x);
+					final double py = MathHelper.lerp(distScale, this.posY, this.posY + vec3d.y);
+					final double pz = MathHelper.lerp(distScale, this.posZ, this.posZ + vec3d.z);
+					final double particleSpeedMod = -0.125;
+					for (int i = 0; i < 5; i++) {
+						final float prad = ((seg + this.rand.nextFloat()) * segmentRads);
+						final float pcos = MathHelper.cos(prad), psin = MathHelper.sin(prad);
+						final double psegX = px + (((ringUp.x * psin) + (pcos * ringRight.x)) * r);
+						final double psegY = py + (((ringUp.y * psin) + (pcos * ringRight.y)) * r);
+						final double psegZ = pz + (((ringUp.z * psin) + (pcos * ringRight.z)) * r);
+						this.spell.getSpellEffect().spawnProjectileParticle(this, psegX, psegY, psegZ, velX * particleSpeedMod, velY * particleSpeedMod, velZ * particleSpeedMod);
+					}
+				}
 				continue;
 			}
 			
-			final double velX = nextSegX - segX, velY = nextSegY - segY, velZ = nextSegZ - segZ;
 			// spawn particles
 			if ((this.spell != null) && !this.spell.isEmpty() && this.world.isRemote) {
 				final float prad = ((seg + this.rand.nextFloat()) * segmentRads);
@@ -342,6 +362,7 @@ public class LuteSpellEntity extends Entity implements IProjectile, IEntityAddit
 		if (compound.contains("owner", 10))
 			this.ownerId = NBTUtil.readUniqueId(compound.getCompound("owner"));
 		this.radius = compound.getFloat("radius");
+		this.initialLife = compound.getInt("initialLife");
 		this.remainingLife = compound.getInt("remainingLife");
 		this.setSegmentStatesFromInt(compound.getInt("segmentStates"));
 	}
@@ -354,6 +375,7 @@ public class LuteSpellEntity extends Entity implements IProjectile, IEntityAddit
 		if (this.ownerId != null)
 			compound.put("owner", NBTUtil.writeUniqueId(this.ownerId));
 		compound.putFloat("radius", this.radius);
+		compound.putInt("initialLife", this.initialLife);
 		compound.putInt("remainingLife", this.remainingLife);
 		compound.putInt("segmentStates", this.getSegmentStatesAsInt());
 	}
@@ -386,6 +408,7 @@ public class LuteSpellEntity extends Entity implements IProjectile, IEntityAddit
 		this.spell.write(buf);
 		buf.writeFloat(this.castingStrength);
 		buf.writeFloat(this.radius);
+		buf.writeVarInt(this.initialLife);
 		buf.writeVarInt(this.remainingLife);
 		if (this.ownerId != null) {
 			buf.writeBoolean(true);
@@ -400,6 +423,7 @@ public class LuteSpellEntity extends Entity implements IProjectile, IEntityAddit
 		this.spell = AlchemySpell.read(buf);
 		this.castingStrength = buf.readFloat();
 		this.radius = buf.readFloat();
+		this.initialLife = buf.readVarInt();
 		this.remainingLife = buf.readVarInt();
 		this.owner = null;
 		this.ownerId = (buf.readBoolean()) ? buf.readUniqueId() : null;

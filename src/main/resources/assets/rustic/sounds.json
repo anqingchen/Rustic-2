@@ -1,6 +1,11 @@
 {
 	"lute": {
 		"subtitle": "rustic.subtitle.lute",
-		"sounds": [ "rustic:lute" ]
+		"sounds": [
+			{
+				"name": "rustic:lute",
+				"volume": 0.0875
+			}
+		]
 	}
 }

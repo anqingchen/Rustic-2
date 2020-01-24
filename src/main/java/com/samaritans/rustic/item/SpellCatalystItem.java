@@ -66,7 +66,11 @@ public class SpellCatalystItem extends Item implements ISpellCatalystItem {
 
 	@Override
 	public void depleteSpellCatalyst(ItemStack stack, @Nullable PlayerEntity player) {
-		stack.shrink(1);
+		if (!stack.isEmpty()) {
+			stack.shrink(1);
+			if (stack.isEmpty() && (player != null))
+				player.inventory.deleteStack(stack);
+		}
 	}
 	
 	@OnlyIn(Dist.CLIENT)

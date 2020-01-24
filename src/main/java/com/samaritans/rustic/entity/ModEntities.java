@@ -19,10 +19,10 @@ public class ModEntities {
     public static void onEntitiesRegistry(final RegistryEvent.Register<EntityType<?>> entityRegistryEvent) {
     	entityRegistryEvent.getRegistry().registerAll(
     			EntityType.Builder.create(ChairBlock.ChairEntity::new, EntityClassification.MISC).size(0, 0)
-    					.setShouldReceiveVelocityUpdates(false).setTrackingRange(64).setUpdateInterval(40)
+    					.setShouldReceiveVelocityUpdates(false).setTrackingRange(10).setUpdateInterval(40)
     					.build("chair").setRegistryName(Rustic.MODID, "chair"),
     			EntityType.Builder.<LuteSpellEntity>create(LuteSpellEntity::new, EntityClassification.MISC).size(0, 0)
-    					.setShouldReceiveVelocityUpdates(true).setTrackingRange(96).setUpdateInterval(1).immuneToFire().disableSummoning()
+    					.setShouldReceiveVelocityUpdates(true).setTrackingRange(10).setUpdateInterval(2).immuneToFire().disableSummoning()
     					.build("lute_spell").setRegistryName(Rustic.MODID, "lute_spell")
     	);
     }

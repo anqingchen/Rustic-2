@@ -81,7 +81,7 @@ public class SpellProjectileParticle extends SpriteTexturedParticle {
 	
 	@Override
 	public float getScale(float partialTicks) {
-		return this.particleScale * (1f - (0.5f * (float) this.age / (float) this.maxAge));
+		return this.particleScale * (1f - (0.3f * (float) this.age / (float) this.maxAge));
 	}
 	
 	@OnlyIn(Dist.CLIENT)
